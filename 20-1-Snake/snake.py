@@ -47,8 +47,6 @@ class Snake:
     # The head just moves in whatever direction it is facing.
     # each segment must then move to the previous position of the segment ahead of it.
     def move(self):
-        self.screen.tracer(False)
-
         for index, segment in enumerate(self.body):
             if 0 == index:
                 segment.move_forward()
@@ -88,9 +86,12 @@ class Snake:
 
         self.body.append(new_segment)
         self.move_delay *= 0.99
-    
+
     def get_snake_width(self):
         return self.snake_width
-    
+
     def get_snake_positions(self):
         return [segment.get_position() for segment in self.body]
+
+    def get_snake_mouth_position(self):
+        return self.body[0].get_position()

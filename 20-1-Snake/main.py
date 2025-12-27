@@ -1,50 +1,65 @@
 import math
-import random
+from turtle import Screen
 
-from turtle import Screen, Turtle
+from food import Food
+from scoreboard import Scoreboard
 from snake import Snake
 
 
-def create_food_turtle():
-    food_turtle = Turtle()
-    food_turtle.hideturtle()
-    food_turtle.penup()
+def run_game():
+    food_placer = Food(screen, 0.4)
+    scoreboard = Scoreboard(game_height)
 
-    return food_turtle
+    food_placer.place_food(
+        snake.get_snake_positions(),
+        snake.get_snake_width(),
+    )
 
+    while not snake.has_collided():
+        play_game_turn(snake, food_placer, scoreboard)
 
-def add_food(food_placer, snake_position, game_length, game_height, snake_width):
-    food_pos = get_food_position(snake_position, game_length, game_height, snake_width)
-
-    food_placer.pencolor("red")
-    food_placer.shapesize(stretch_wid=0.5, stretch_len=0.5)
-    food_placer.goto(food_pos[0], food_pos[1])
-    food_placer.pendown()
-    food_placer.dot(snake_width)
-    food_placer.penup()
-
-
-def get_food_position(snake_position, game_length, game_height, snake_width):
-    food_placed = False
-    min_x = int(-math.floor(game_length / 2) + snake_width)
-    print("MIN X:", min_x)
-    max_x = int(math.floor(game_length / 2) - snake_width)
-    print("MAX X:", max_x)
-    min_y = int(-math.floor(game_height / 2) + snake_width)
-    print("MIN Y:", min_y)
-    max_y = int(math.floor(game_height / 2) - snake_width)
-    print("MAX Y:", max_y)
-
-    while not food_placed:
-        food_pos = [random.randint(min_x, max_x), random.randint(min_y, max_y)]
-
-        if (food_pos[0], food_pos[1]) not in snake_position:
-            return food_pos
+    if snake.has_collided():
+        handle_end_by_collision(scoreboard)
+    else:
+        print("No collision detected in 10 moves.")
 
 
+def play_game_turn(snake, food_placer, scoreboard):
+    snake.move()
+
+    if has_eaten_food(snake, food_placer):
+        handle_food_eaten(snake, food_placer, scoreboard)
+
+def has_eaten_food(snake, food_placer):
+    head_x, head_y = snake.get_snake_mouth_position()
+    snake_width = snake.get_snake_width()
+    head_x_range = [head_x - snake_width / 2, head_x + snake_width / 2]
+    head_y_range = [head_y - snake_width / 2, head_y + snake_width / 2]
+    food_x, food_y = food_placer.get_position()
+
+    return (
+        head_x_range[0] <= food_x
+        and food_x <= head_x_range[1]
+        and head_y_range[0] <= food_y
+        and food_y <= head_y_range[1]
+    )
+
+
+def handle_food_eaten(snake, food_placer, scoreboard):
+    snake.grow()
+    food_placer.place_food(snake.get_snake_positions(), snake.get_snake_width())
+    scoreboard.increase_score()
+
+
+def handle_end_by_collision(scoreboard):
+    print("Collision detected! Game over.")
+    scoreboard.declare_game_over()
+
+
+# Main program
 if __name__ == "__main__":
     base_snake_length = 20
-    snake_width_factor = 0.5
+    snake_width_factor = 0.75
     snake_initial_segments = 8
     snake_initial_length_factor = snake_initial_segments * snake_width_factor
     game_length = 600
@@ -53,6 +68,7 @@ if __name__ == "__main__":
     screen.title("Snake")
     screen.setup(width=game_length, height=game_height)
     screen.bgcolor("black")
+    screen.tracer(False)
 
     snake = Snake(
         screen,
@@ -62,33 +78,11 @@ if __name__ == "__main__":
         game_length,
         game_height,
     )
-    food_placer = create_food_turtle()
-    food = add_food(
-        food_placer,
-        snake.get_snake_positions(),
-        game_length,
-        game_height,
-        snake.get_snake_width(),
-    )
 
     screen.onkey(snake.turn_left, "Left")
     screen.onkey(snake.turn_right, "Right")
     screen.listen()
 
-    move_count = 0
-
-    while not snake.has_collided():
-        snake.move()
-        move_count += 1
-
-        if move_count > 10:
-            snake.grow()
-            move_count = 0
-
-    if snake.has_collided():
-        print("Collision detected! Game over.")
-
-    else:
-        print("No collision detected in 10 moves.")
+    run_game()
 
     screen.exitonclick()

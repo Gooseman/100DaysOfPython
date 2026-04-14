@@ -15,6 +15,7 @@ class Paddle:
     _moving_up = False
     _moving_down = False
     _move_delay = 0.015
+    _move_distance = paddle_width
 
     def __init__(self, screen):
         self.screen = screen
@@ -61,11 +62,12 @@ class Paddle:
     def move_up(self):
         print("Moving paddle up")
 
-        if self._paddle[0].ycor() >= (court_height / 2) - paddle_width:
+        if self._paddle[0].ycor() >= (court_height / 2) - self._move_distance:
+            self.stop_moving()
             return
 
         for segment in self._paddle:
-            segment.goto(segment.xcor(), segment.ycor() + paddle_width)
+            segment.goto(segment.xcor(), segment.ycor() + self._move_distance)
 
         # timer.sleep(self._move_delay)
 
@@ -89,12 +91,12 @@ class Paddle:
 
         if (
             self._paddle[len(self._paddle) - 1].ycor()
-            <= -(court_height / 2) + paddle_width
+            <= -(court_height / 2) + self._move_distance
         ):
             return
 
         for segment in self._paddle:
-            segment.goto(segment.xcor(), segment.ycor() - paddle_width)
+            segment.goto(segment.xcor(), segment.ycor() - self._move_distance)
 
     def stop_moving(self):
         self._moving_up = False

@@ -53,17 +53,27 @@ class Game:
         return Court()
 
     def _create_paddles(self):
-        left_paddle = self._create_paddle(-court_width / 2 + paddle_distance_from_edge)
-        right_paddle = self._create_paddle(court_width / 2 - paddle_distance_from_edge)
+        left_paddle = self._create_paddle(self._left_paddle_x_pos())
+        right_paddle = self._create_paddle(self._right_paddle_x_pos())
 
         return left_paddle, right_paddle
+
+    def _left_paddle_x_pos(self):
+        return -court_width / 2 + paddle_distance_from_edge
+    
+    def _right_paddle_x_pos(self):
+        return court_width / 2 - paddle_distance_from_edge
 
     def _create_paddle(self, x_position):
         paddle = Paddle(self.screen)
         paddle_length = paddle.get_length()
 
-        paddle.move_to(x_position, 0 + (paddle_length / 2))
+        self._reset_paddle_position(paddle, x_position)
         return paddle
+    
+    def _reset_paddle_position(self, paddle, x_position):
+        paddle.move_to(x_position, 0 + (paddle.get_length() / 2))
+        paddle.stop_moving()
 
     @staticmethod
     def _create_ball():
@@ -80,6 +90,9 @@ class Game:
         return math.degrees(math.atan(opposite / adjacent))
 
     def _handle_paddle_move(self, paddle_move):
+        if (not self._game_on):
+            return
+        
         paddle_move()
         self.screen.update()
 
@@ -95,20 +108,80 @@ class Game:
             self.left_paddle.move()
             self.right_paddle.move()
 
-            right_paddle_edge_x, right_paddle_edge_y = self.right_paddle.get_edge(
-                paddle_left_edge
-            )
-
-            if self.ball.get_position()[0] >= right_paddle_edge_x:
-                print("Ball reached right paddle edge at x =", right_paddle_edge_x)
-
-            if (
-                self.ball.get_position()[1] >= right_paddle_edge_y[0]
-                or self.ball.get_position()[1] <= right_paddle_edge_y[1]
-            ):
-                print("Ball within right paddle y range:", right_paddle_edge_y)
+            if self.ball.is_moving_right():
+                self._handle_rightward_move()
+            else:
+                self._handle_leftward_move()
 
             self.screen.update()
             move_count += 1
             time.sleep(0.02)
         pass
+
+    def _handle_rightward_move(self):
+
+        ball_position_x, ball_position_y = self.ball.get_position()
+        ball_width = self.ball.get_width()
+
+        if self._has_hit_top_or_bottom_wall(ball_position_y, ball_width):
+            self.ball.bounce_y()
+
+        right_paddle_edge_x, right_paddle_edge_y = self.right_paddle.get_edge(paddle_left_edge)
+        is_past_right_paddle = (ball_position_x - ball_width) >= right_paddle_edge_x
+
+        if is_past_right_paddle:
+            self._handle_ball_pasted_right_paddle(right_paddle_edge_x)
+
+        ball_at_right_paddle_edge = (ball_position_x + ball_width / 2) >= right_paddle_edge_x \
+                                    and (ball_position_x - ball_width / 2) <= right_paddle_edge_x
+        ball_within_right_paddle_y_range = ball_position_y >= right_paddle_edge_y[1] \
+                                           and ball_position_y <= right_paddle_edge_y[0]
+        
+        if (ball_at_right_paddle_edge and ball_within_right_paddle_y_range):
+            print("Ball within right paddle y range:", right_paddle_edge_y)
+            print("Ball at right paddle edge:", right_paddle_edge_x)
+            self.ball.bounce_x()
+    
+    def _has_hit_top_or_bottom_wall(self, ball_position_y, ball_width):
+        has_hit_top_wall = (ball_position_y + ball_width / 2) >= (court_height / 2)
+        has_hit_bottom_wall = (ball_position_y - ball_width / 2) <= -(court_height / 2)
+
+        print(f"Ball position: ({ball_position_y}), has_hit_top_wall: {has_hit_top_wall}, has_hit_bottom_wall: {has_hit_bottom_wall}")
+        return has_hit_top_wall or has_hit_bottom_wall
+    
+    def _handle_ball_pasted_right_paddle(self, right_paddle_edge_x):
+        print("Ball passed right paddle edge at x =", right_paddle_edge_x)
+        self._game_on = False
+        self.ball.reset_position()
+        self._reset_paddle_position(self.right_paddle, self._right_paddle_x_pos())
+        self._reset_paddle_position(self.left_paddle, self._left_paddle_x_pos())
+
+    def _handle_leftward_move(self):
+        ball_position_x, ball_position_y = self.ball.get_position()
+        ball_width = self.ball.get_width()
+
+        if self._has_hit_top_or_bottom_wall(ball_position_y, ball_width):
+            self.ball.bounce_y()
+            
+        left_paddle_edge_x, left_paddle_edge_y = self.left_paddle.get_edge(paddle_right_edge)
+        is_past_left_paddle = (ball_position_x + ball_width) <= left_paddle_edge_x
+
+        if is_past_left_paddle:
+            self._handle_ball_pasted_left_paddle(left_paddle_edge_x)
+        
+        ball_at_left_paddle_edge = (ball_position_x - ball_width / 2) <= left_paddle_edge_x \
+                                    and (ball_position_x + ball_width / 2) >= left_paddle_edge_x
+        ball_within_left_paddle_y_range = ball_position_y >= left_paddle_edge_y[1] \
+                                           and ball_position_y <= left_paddle_edge_y[0]
+
+        if (ball_at_left_paddle_edge and ball_within_left_paddle_y_range):
+            print("Ball within left paddle y range:", left_paddle_edge_y)
+            print("Ball at left paddle edge:", left_paddle_edge_x)
+            self.ball.bounce_x()
+    
+    def _handle_ball_pasted_left_paddle(self, left_paddle_edge_x):
+        print("Ball reached left paddle edge at x =", left_paddle_edge_x)
+        self._game_on = False
+        self.ball.reset_position()
+        self._reset_paddle_position(self.right_paddle, self._right_paddle_x_pos())
+        self._reset_paddle_position(self.left_paddle, self._left_paddle_x_pos())

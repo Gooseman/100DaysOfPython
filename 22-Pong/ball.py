@@ -32,11 +32,11 @@ class Ball:
         self.ball.setheading(heading)
 
     def bounce_y(self):
-        print("Bouncing ball vertically. Current heading:", self.ball.heading())
+        # print("Bouncing ball vertically. Current heading:", self.ball.heading())
         self.set_heading((-self.ball.heading()) % 360)
 
     def bounce_x(self):
-        print("Bouncing ball. Current heading:", self.ball.heading())
+        # print("Bouncing ball. Current heading:", self.ball.heading())
         self.set_heading((180 - self.ball.heading()) % 360)
         self._direction *= -1
 

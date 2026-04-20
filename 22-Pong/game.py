@@ -31,16 +31,16 @@ class Game:
 
         self.screen.listen()
         self.screen.onkey(
-            lambda: self._handle_paddle_move(self.left_paddle.turn_up), "w"
+            lambda: self._handle_paddle_move(self.left_paddle.turn_up, self.left_paddle.move), "w"
         )
         self.screen.onkey(
-            lambda: self._handle_paddle_move(self.left_paddle.turn_down), "s"
+            lambda: self._handle_paddle_move(self.left_paddle.turn_down, self.left_paddle.move), "s"
         )
         self.screen.onkey(
-            lambda: self._handle_paddle_move(self.right_paddle.turn_up), "Up"
+            lambda: self._handle_paddle_move(self.right_paddle.turn_up, self.right_paddle.move), "Up"
         )
         self.screen.onkey(
-            lambda: self._handle_paddle_move(self.right_paddle.turn_down), "Down"
+            lambda: self._handle_paddle_move(self.right_paddle.turn_down, self.right_paddle.move), "Down"
         )
         self.screen.onkey(lambda: self.right_paddle.stop_moving(), "Left")
         self.screen.onkey(lambda: self.right_paddle.stop_moving(), "Right")
@@ -72,7 +72,8 @@ class Game:
         return paddle
     
     def _reset_paddle_position(self, paddle, x_position):
-        paddle.move_to(x_position, 0 + (paddle.get_length() / 2))
+        # paddle.move_to(x_position, 0 + (paddle.get_length() / 2))
+        paddle.move_to(x_position, 0)
         paddle.stop_moving()
 
     @staticmethod
@@ -89,24 +90,28 @@ class Game:
 
         return math.degrees(math.atan(opposite / adjacent))
 
-    def _handle_paddle_move(self, paddle_move):
+    def _handle_paddle_move(self, paddle_direction, paddle_move):
         if (not self._game_on):
             return
         
+        paddle_direction()
         paddle_move()
-        self.screen.update()
+        # self.screen.update()
 
     def start_game(self):
+        if (self._game_on):
+            return
+        
         print("Starting game...")
         move_count = 0
         self.ball.set_heading(random.randint(0, int(self.max_ball_angle)))
         self._game_on = True
 
         while self._game_on:  # and move_count < 100:
-            print("Step")
+            # print("Step")
             self.ball.move()
-            self.left_paddle.move()
-            self.right_paddle.move()
+            # self.left_paddle.move()
+            # self.right_paddle.move()
 
             if self.ball.is_moving_right():
                 self._handle_rightward_move()
@@ -115,11 +120,11 @@ class Game:
 
             self.screen.update()
             move_count += 1
-            time.sleep(0.02)
+            time.sleep(0.05)
         pass
 
     def _handle_rightward_move(self):
-
+        # Investigate using the Turtle distance method to determine if the ball is within range of the paddle, rather than calculating the edges and ranges ourselves.
         ball_position_x, ball_position_y = self.ball.get_position()
         ball_width = self.ball.get_width()
 
@@ -129,6 +134,8 @@ class Game:
         right_paddle_edge_x, right_paddle_edge_y = self.right_paddle.get_edge(paddle_left_edge)
         is_past_right_paddle = (ball_position_x - ball_width) >= right_paddle_edge_x
 
+        # print(f"Ball position: ({ball_position_x}, {ball_position_y}), right_paddle_edge_x: {right_paddle_edge_x}, is_past_right_paddle: {is_past_right_paddle}")
+
         if is_past_right_paddle:
             self._handle_ball_pasted_right_paddle(right_paddle_edge_x)
 
@@ -137,20 +144,23 @@ class Game:
         ball_within_right_paddle_y_range = ball_position_y >= right_paddle_edge_y[1] \
                                            and ball_position_y <= right_paddle_edge_y[0]
         
+        # print(f"Ball position: ({ball_position_x}, {ball_position_y}), ball_width: {ball_width}, right_paddle_edge_x: {right_paddle_edge_x}, right_paddle_edge_y: {right_paddle_edge_y}")
+        # print(f"ball_at_right_paddle_edge: {ball_at_right_paddle_edge}, ball_within_right_paddle_y_range: {ball_within_right_paddle_y_range}")
+        
         if (ball_at_right_paddle_edge and ball_within_right_paddle_y_range):
-            print("Ball within right paddle y range:", right_paddle_edge_y)
-            print("Ball at right paddle edge:", right_paddle_edge_x)
+            # print("Ball within right paddle y range:", right_paddle_edge_y)
+            # print("Ball at right paddle edge:", right_paddle_edge_x)
             self.ball.bounce_x()
     
     def _has_hit_top_or_bottom_wall(self, ball_position_y, ball_width):
         has_hit_top_wall = (ball_position_y + ball_width / 2) >= (court_height / 2)
         has_hit_bottom_wall = (ball_position_y - ball_width / 2) <= -(court_height / 2)
 
-        print(f"Ball position: ({ball_position_y}), has_hit_top_wall: {has_hit_top_wall}, has_hit_bottom_wall: {has_hit_bottom_wall}")
+        # print(f"Ball position: ({ball_position_y}), has_hit_top_wall: {has_hit_top_wall}, has_hit_bottom_wall: {has_hit_bottom_wall}")
         return has_hit_top_wall or has_hit_bottom_wall
     
     def _handle_ball_pasted_right_paddle(self, right_paddle_edge_x):
-        print("Ball passed right paddle edge at x =", right_paddle_edge_x)
+        # print("Ball passed right paddle edge at x =", right_paddle_edge_x)
         self._game_on = False
         self.ball.reset_position()
         self._reset_paddle_position(self.right_paddle, self._right_paddle_x_pos())
@@ -175,12 +185,12 @@ class Game:
                                            and ball_position_y <= left_paddle_edge_y[0]
 
         if (ball_at_left_paddle_edge and ball_within_left_paddle_y_range):
-            print("Ball within left paddle y range:", left_paddle_edge_y)
-            print("Ball at left paddle edge:", left_paddle_edge_x)
+            # print("Ball within left paddle y range:", left_paddle_edge_y)
+            # print("Ball at left paddle edge:", left_paddle_edge_x)
             self.ball.bounce_x()
     
     def _handle_ball_pasted_left_paddle(self, left_paddle_edge_x):
-        print("Ball reached left paddle edge at x =", left_paddle_edge_x)
+        # print("Ball reached left paddle edge at x =", left_paddle_edge_x)
         self._game_on = False
         self.ball.reset_position()
         self._reset_paddle_position(self.right_paddle, self._right_paddle_x_pos())

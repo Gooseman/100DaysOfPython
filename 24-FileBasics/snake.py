@@ -22,6 +22,25 @@ class Snake:
         self.snake_width = snake_width_factor * base_segment_length
         self.initial_length_factor = initial_segments
 
+        # self.head_pos = [0, 0]
+
+        # def create_segment(index):
+        #     return SnakeSegment(
+        #         [self.head_pos[0] - index * self.snake_width, 0],
+        #         self.base_snake_length,
+        #         self.snake_width_factor,
+        #         self.head_colour if index == 0 else self.body_colour,
+        #     )
+
+        # self.body = [create_segment(index) for index in range(0, initial_segments)]
+        self.body = self._create_snake()
+
+        self.game_right = game_length / 2 - self.snake_width / 2
+        self.game_left = -self.game_right
+        self.game_top = game_height / 2 - self.snake_width / 2
+        self.game_bottom = -self.game_top
+    
+    def _create_snake(self):
         self.head_pos = [0, 0]
 
         def create_segment(index):
@@ -32,12 +51,7 @@ class Snake:
                 self.head_colour if index == 0 else self.body_colour,
             )
 
-        self.body = [create_segment(index) for index in range(0, initial_segments)]
-
-        self.game_right = game_length / 2 - self.snake_width / 2
-        self.game_left = -self.game_right
-        self.game_top = game_height / 2 - self.snake_width / 2
-        self.game_bottom = -self.game_top
+        return [create_segment(index) for index in range(0, self.initial_length_factor)]
 
     # Move the snake forward one segment lenght.
     # The head just moves in whatever direction it is facing.
@@ -87,3 +101,21 @@ class Snake:
 
     def get_snake_mouth_position(self):
         return self.body[0].get_position()
+
+    def reset(self):
+        print("Resetting snake...")
+        for segment in self.body:
+            segment.remove()
+
+        # self.head_pos = [0, 0]
+
+        # def create_segment(index):
+        #     return SnakeSegment(
+        #         [self.head_pos[0] - index * self.snake_width, 0],
+        #         self.base_snake_length,
+        #         self.snake_width_factor,
+        #         self.head_colour if index == 0 else self.body_colour,
+        #     )
+
+        # self.body = [create_segment(index) for index in range(0, self.initial_length_factor)]
+        self.body = self._create_snake()

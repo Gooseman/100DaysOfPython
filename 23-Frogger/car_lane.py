@@ -11,6 +11,9 @@ class CarLane:
     
     def get_speed(self):
         return self._speed
+    
+    def increase_speed(self):
+        self._speed += base_square_size * 0.5
 
     def is_available_for_new_car(self):
         # A lane can have a car added if the right end of the last car in the lane is at least 2 base_square_size 

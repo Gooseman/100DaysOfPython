@@ -13,9 +13,11 @@ class Food:
         self.food_placer = Turtle("circle")
         self.food_placer.penup()
         self.food_placer.color("red")
+        self.food_placer.hideturtle()
         self.food_placer.shapesize(stretch_len=food_size_factor, stretch_wid=food_size_factor)
 
     def place_food(self, snake_position, snake_width):
+        print("Placing food. Snake position:", snake_position)
         self.food_placer.clear()
 
         food_pos = Food.get_food_position(
@@ -49,3 +51,6 @@ class Food:
 
     def get_position(self):
         return self.food_placer.position()
+    
+    def clear_food(self):
+        self.food_placer.clear()

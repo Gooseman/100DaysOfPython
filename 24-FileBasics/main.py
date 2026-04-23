@@ -22,15 +22,14 @@ if __name__ == "__main__":
     snake = Snake(base_snake_length, snake_width_factor, snake_initial_segments, game_length, game_height)
     food_placer = Food(0.4, game_length, game_height)
     scoreboard = Scoreboard(game_height)
+    turn_delay = 0.1
+    game = Game(screen, food_placer, scoreboard, snake, turn_delay)
 
     screen.onkey(snake.turn_left, "Left")
     screen.onkey(snake.turn_right, "Right")
+    screen.onkey(game.run_game, "space")
     screen.listen()
 
-    turn_delay = 0.1
-
-    game = Game(screen, food_placer, scoreboard, snake, turn_delay)
-
-    game.run_game()
-
+    # game.run_game()
     screen.exitonclick()
+

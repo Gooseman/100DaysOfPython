@@ -24,5 +24,6 @@ class Car(Turtle):
         return self.xcor() - ((base_square_size / 2) * self.length)
 
     def has_collided_with(self, frog_right_edge):
-        return self.get_left_edge() <= frog_right_edge
+        # print(f"Checking collision: Car left edge = {self.get_left_edge()}, Frog right edge = {frog_right_edge}")
+        return self.get_left_edge() <= frog_right_edge and self.get_right_edge() >= frog_right_edge - base_square_size
     

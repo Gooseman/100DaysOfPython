@@ -3,8 +3,8 @@ from time import sleep
 
 from car_lane import CarLane
 from constants import base_square_size, game_height
-
 from frog import Frog
+from scoreboard import Scoreboard
 
 class Game:
     def __init__(self, screen):
@@ -17,7 +17,8 @@ class Game:
         number_of_lanes = game_height // lane_width - 2
         self._lanes = [CarLane(i) for i in range(0, number_of_lanes)]
 
-        self.frog = Frog()
+        self._frog = Frog()
+        self._scoreboard = Scoreboard()
         self._prepare_key_bindings()
         self._screen.update()
         self._game_running = False
@@ -25,7 +26,9 @@ class Game:
         self._reached_goal = False
     
     def reset_game(self):
-        self.frog.reset()
+        self._scoreboard.reset()
+        self._frog.reset()
+        self._scoreboard.reset()
 
         for lane in self._lanes:
             lane.reset()
@@ -35,16 +38,27 @@ class Game:
         self._reached_goal = False
         self._screen.update()
     
+    def _next_level(self):
+        self._scoreboard.increase_level()
+        self._frog.reset()
+        
+        for lane in self._lanes:
+            lane.reset()
+            lane.increase_speed()
+        
+        self._reached_goal = False
+        self._screen.update()
+
     def _prepare_key_bindings(self):
         self._screen.listen()
-        self._screen.onkey(lambda: self._move_turtle(self.frog.move_up), "w")
-        self._screen.onkey(lambda: self._move_turtle(self.frog.move_down), "s")
-        self._screen.onkey(lambda: self._move_turtle(self.frog.move_left), "a")
-        self._screen.onkey(lambda: self._move_turtle(self.frog.move_right), "d")
-        self._screen.onkey(lambda: self._move_turtle(self.frog.move_left), "Left")
-        self._screen.onkey(lambda: self._move_turtle(self.frog.move_right), "Right")
-        self._screen.onkey(lambda: self._move_turtle(self.frog.move_up), "Up")
-        self._screen.onkey(lambda: self._move_turtle(self.frog.move_down), "Down")
+        self._screen.onkey(lambda: self._move_turtle(self._frog.move_up), "w")
+        self._screen.onkey(lambda: self._move_turtle(self._frog.move_down), "s")
+        self._screen.onkey(lambda: self._move_turtle(self._frog.move_left), "a")
+        self._screen.onkey(lambda: self._move_turtle(self._frog.move_right), "d")
+        self._screen.onkey(lambda: self._move_turtle(self._frog.move_left), "Left")
+        self._screen.onkey(lambda: self._move_turtle(self._frog.move_right), "Right")
+        self._screen.onkey(lambda: self._move_turtle(self._frog.move_up), "Up")
+        self._screen.onkey(lambda: self._move_turtle(self._frog.move_down), "Down")
         self._screen.onkey(self.start_game, "space")
 
     def _move_turtle(self, move_function):
@@ -73,14 +87,14 @@ class Game:
         print("Starting game...")
         self._game_running = True
 
-        while self._game_running and not self._collision and not self._reached_goal:
+        while self._game_running and not self._collision:
             self._game_loop()
     
     def _game_loop(self):
         if self.has_reached_goal():
             print("Congratulations! You've reached the goal!")
             self._reached_goal = True
-            self._game_running = False
+            self._next_level()
             return
         
         self.move_cars()
@@ -88,10 +102,11 @@ class Game:
 
         if self._collision:
             self._game_running = False
+            self._scoreboard.game_over()
             return
 
         self.add_cars()
-        sleep(0.25)
+        sleep(0.1)
     
     def move_cars(self):
         for lane in self._lanes:
@@ -100,11 +115,11 @@ class Game:
         self._screen.update()
     
     def has_reached_goal(self):
-        return self.frog.get_y_position() >= (game_height / 2) - (2 * base_square_size)
+        return self._frog.get_y_position() >= (game_height / 2) - (2 * base_square_size)
     
     def check_for_collisions(self):
         # Determine which lane the frog is in based on its y coordinate.
-        frog_position = self.frog.get_y_position()
+        frog_position = self._frog.get_y_position()
         lane_number = int((frog_position + (game_height / 2)) // (2 * base_square_size) - 1)
 
         if lane_number < 0 or lane_number >= len(self._lanes):
@@ -114,16 +129,20 @@ class Game:
         lane = self._lanes[lane_number]
 
         for car in lane._cars:
-            if car.has_collided_with(self.frog.get_right_edge()):
-                # self.reset_game()
+            if car.has_collided_with(self._frog.get_right_edge()):
                 self._collision = True
+                print("Collision detected! Game over.")
                 break
     
     def add_cars(self):
+        if randint(1, 2) != 1:
+            # Only add a new car 1 in 2 times to avoid overwhelming the player with cars
+            return
+        
         # Get all lanes that can have a new car
         available_lanes = self._get_available_lanes()
-        # Generate new cars in at most 2 of the available lanes
-        new_car_lanes = sample(available_lanes, k=randint(0, min(2, len(available_lanes))))
+        # Generate new cars in at most 1 of the available lanes
+        new_car_lanes = sample(available_lanes, 1)
 
         for lane in new_car_lanes:
             lane.add_car()

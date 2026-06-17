@@ -3,6 +3,7 @@ from dates import get_today
 from emailer import send_email, start_connection
 
 def get_all_birthdays():
+    """Reads all birthdays from the CSV file and returns a dictionary of birthdays grouped by (month, day)."""
     raw_birthdays = read_birthdays()
     birthdays_by_date = {
         date: group.to_dict(orient="records") for date, group in raw_birthdays
@@ -12,11 +13,13 @@ def get_all_birthdays():
 
 
 def get_todays_birthdays(birthdays):
+    """Returns a list of birthdays for today."""
     today = get_today()
     return birthdays.get((today[1], today[2]), [])
 
 
 def send_birthday_wishes(birthdays):
+    """Sends birthday wishes to all users whose birthday is today."""
     with start_connection() as connection:
         for person in birthdays:
             print(f"Sending for birthday: {person}")
@@ -24,7 +27,7 @@ def send_birthday_wishes(birthdays):
 
 
 def send_birthday_wish(connection, person):
-    # print(f"Sending birthday wish to {person['Name']} at {person['Email']}")
+    """Sends a birthday wish to a single user."""
     age = get_age(person["Year"])
 
     send_email(
@@ -36,6 +39,7 @@ def send_birthday_wish(connection, person):
 
 
 def get_age(birth_year):
+    """Returns the age of a person given their birth year with an appropriate suffix (st, nd, rd, th)."""
     current_year = get_today()[0]
     age = str(current_year - birth_year)
 

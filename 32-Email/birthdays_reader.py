@@ -1,5 +1,6 @@
 
 def read_birthdays():
+    """Reads birthdays from a CSV file and returns a grouped DataFrame by (Month, Day)."""
     import pandas as pd
 
     try:

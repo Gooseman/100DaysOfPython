@@ -1,11 +1,12 @@
 [MESSAGES CONTROL]
 disable=missing-module-docstring,
-missing-function-docstring,
-missing-class-docstring,
-missing-final-newline,
-too-few-public-methods,
-too-many-instance-attributes,
-attribute-defined-outside-init,
+    missing-function-docstring,
+    missing-class-docstring,
+    missing-final-newline,
+    too-few-public-methods,
+    too-many-instance-attributes,
+    attribute-defined-outside-init,
+    global-statement
 
 [FORMAT]
 max-line-length=120

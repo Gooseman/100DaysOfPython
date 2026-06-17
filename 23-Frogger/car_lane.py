@@ -16,7 +16,7 @@ class CarLane:
         self._speed += BASE_SQUARE_SIZE * 0.5
 
     def is_available_for_new_car(self):
-        # A lane can have a car added if the right end of the last car in the lane is at least 2 base_square_size 
+        # A lane can have a car added if the right end of the last car in the lane is at least 2 base_square_siz
         # away from the edge of the screen
         return (len(self._cars) == 0) \
             or (self._cars[-1].get_right_edge() < (GAME_WIDTH / 2) - (6 * BASE_SQUARE_SIZE))

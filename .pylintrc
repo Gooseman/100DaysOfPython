@@ -6,7 +6,8 @@ disable=missing-module-docstring,
     too-few-public-methods,
     too-many-instance-attributes,
     attribute-defined-outside-init,
-    global-statement
+    global-statement,
+    too-many-positional-arguments,
 
 [FORMAT]
 max-line-length=120

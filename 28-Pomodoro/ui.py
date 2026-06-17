@@ -28,11 +28,11 @@ class PomodoroUI:
 
         tomato = PhotoImage(file="tomato.png")
         self._time = tk.Label(
-            timer_frame, 
-            text="00:00", 
-            font=("Courier", 24, "bold"), 
-            fg="white", 
-            image=tomato, 
+            timer_frame
+            text="00:00"
+            font=("Courier", 24, "bold")
+            fg="white"
+            image=tomato
             compound="center")
 
         self._time.image = tomato

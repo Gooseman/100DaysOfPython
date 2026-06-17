@@ -20,10 +20,10 @@ class Paddle:
         # self._paddle = [
         #     Paddle._build_paddle_segment() for _ in range(Paddle._number_of_segments)
         # ]
-        self._paddle = Paddle.buildPaddle()
+        self._paddle = Paddle.build_paddle()
 
     @staticmethod
-    def buildPaddle():
+    def build_paddle():
         paddle = Turtle()
         paddle.shape("square")
         paddle.color("white")

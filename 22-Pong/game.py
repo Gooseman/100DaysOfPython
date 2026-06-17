@@ -122,7 +122,7 @@ class Game:
             time.sleep(0.05)
 
     def _handle_rightward_move(self):
-        # Investigate using the Turtle distance method to determine if the ball is within range of the paddle, rather 
+        # Investigate using the Turtle distance method to determine if the ball is within range of the paddle, rathe
         # than calculating the edges and ranges ourselves.
         ball_position_x, ball_position_y = self.ball.get_position()
         ball_width = self.ball.get_width()
@@ -133,7 +133,7 @@ class Game:
         right_paddle_edge_x, right_paddle_edge_y = self.right_paddle.get_edge(PADDLE_LEFT_EDGE)
         is_past_right_paddle = (ball_position_x - ball_width) >= right_paddle_edge_x
 
-        # print(f"Ball position: ({ball_position_x}, {ball_position_y}), right_paddle_edge_x: {right_paddle_edge_x}, 
+        # print(f"Ball position: ({ball_position_x}, {ball_position_y}), right_paddle_edge_x: {right_paddle_edge_x}
         # is_past_right_paddle: {is_past_right_paddle}")
 
         if is_past_right_paddle:

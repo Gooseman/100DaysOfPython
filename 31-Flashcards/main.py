@@ -56,7 +56,7 @@ def mark_as_incorrect(questions, window, flash_card):
 
 def save_incorrect_answers(questions, answer):
     with open(incorrect_answer_file, "a", encoding="utf-8") as file:
-        # Find the question that corresponds to the answer and write it to the file. This is not very efficient, but it 
+        # Find the question that corresponds to the answer and write it to the file. This is not very efficient, but i
         # works for this small dataset.
         print(f"Saving incorrect answer: {answer}")
         for question in questions:
@@ -93,7 +93,7 @@ def run_app():
     flash_card = FlashCard(window)
 
     flash_card.register_handlers(
-        mark_as_correct(questions, window, flash_card), 
+        mark_as_correct(questions, window, flash_card)
         mark_as_incorrect(questions, window, flash_card))
 
     window.after(0, lambda: ask_question(questions, window, flash_card))

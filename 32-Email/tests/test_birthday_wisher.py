@@ -104,7 +104,7 @@ class TestBirthdayWisher(unittest.TestCase):
 
     @patch("birthday_wisher.get_today", return_value=(2026, 6, 16))
     def test_get_todays_birthdays_no_matching_date_returns_empty_list(self, _):
-        """Simulates a scenario where there are no birthdays matching today's date and checks that the result is an 
+        """Simulates a scenario where there are no birthdays matching today's date and checks that the result is a
             empty list."""
         birthdays = {(1, 1): [make_person("X", "x@example.com", 1990, 1, 1)],
                      (2, 2): [make_person("Y", "y@example.com", 1991, 2, 2)]}
@@ -113,7 +113,7 @@ class TestBirthdayWisher(unittest.TestCase):
 
     @patch("birthday_wisher.get_today", return_value=(2026, 6, 16))
     def test_get_todays_birthdays_matching_date_with_multiple_people_returns_list(self, _):
-        """Simulates a scenario where there are multiple birthdays matching today's date and checks that the result is a 
+        """Simulates a scenario where there are multiple birthdays matching today's date and checks that the result is 
             list of those people."""
         todays = [
             make_person("Bob", "b@example.com", 1990, 6, 16),

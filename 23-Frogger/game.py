@@ -12,7 +12,7 @@ class Game:
         self._screen = screen#
 
         lane_width = 2 * BASE_SQUARE_SIZE
-        # Each lane is lane_width wide.  There are therefore game_height // lane_width lanes - 2. The first lane starts 
+        # Each lane is lane_width wide.  There are therefore game_height // lane_width lanes - 2. The first lane start
         # at lane_width and the last lane starts at game_height - lane_width
         number_of_lanes = GAME_HEIGHT // lane_width - 2
         self._lanes = [CarLane(i) for i in range(0, number_of_lanes)]

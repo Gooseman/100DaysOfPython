@@ -23,25 +23,25 @@ class FlashCard:
         canvas_width, canvas_height = 300, 200
         frame_width, frame_height = canvas_width - 40, canvas_height - 40
         card_canvas = tk.Canvas(
-            self._main_window, 
-            width=canvas_width, 
-            height=canvas_height, 
-            highlightthickness=0, 
+            self._main_window,
+            width=canvas_width,
+            height=canvas_height,
+            highlightthickness=0,
             bg=self._main_window["bg"])
         self._card_frame = tk.Frame(card_canvas, width=frame_width, height=frame_height)
 
         self._round_rect(
-            card_canvas, 
-            0, 
-            0, 
-            int(canvas_width), 
-            int(canvas_height), 
-            r=35, 
-            fill="#f0f0f0", 
+            card_canvas,
+            0,
+            0,
+            int(canvas_width),
+            int(canvas_height),
+            r=35,
+            fill="#f0f0f0",
             outline="")
         card_canvas.create_window(
-            int(canvas_width)//2, 
-            int(canvas_height)//2, 
+            int(canvas_width)//2,
+            int(canvas_height)//2,
             window=self._card_frame,
             width=frame_width,
             height=frame_height)
@@ -50,7 +50,7 @@ class FlashCard:
         self._title_label = tk.Label(self._card_frame, text="Test", font=("Arial", 15, "italic"))
         self._question_label = tk.Label(self._card_frame, text="Test", font=("Arial", 25, "bold"))
 
-        # If the frame is displayed, the rounded rectangle disappears. I don't know why, but this is a workaround to 
+        # If the frame is displayed, the rounded rectangle disappears. I don't know why, but this is a workaround to
         # that issue.
         # self._card_frame.pack(expand=True, fill=tk.BOTH)
         # self._card_frame.pack_propagate(False)
@@ -75,8 +75,8 @@ class FlashCard:
         right = tk.PhotoImage(file="./images/right.png").subsample(4, 4)
         wrong = tk.PhotoImage(file="./images/wrong.png").subsample(4, 4)
         self._show_answer_button = tk.Button(
-            self._buttons_frame, 
-            text="", 
+            self._buttons_frame,
+            text="",
             command=self._is_correct,
             image=right,
             borderwidth=0,
@@ -94,8 +94,8 @@ class FlashCard:
         self._show_answer_button.grid(row=0, column=0, sticky="w", padx=(40, 0))
 
         self._next_question_button = tk.Button(
-            self._buttons_frame, 
-            text="", 
+            self._buttons_frame,
+            text="",
             command=self._is_wrong,
             image=wrong,
             borderwidth=0,

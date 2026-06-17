@@ -16,12 +16,14 @@ def wish_happy_birthday():
     # print(birthdays)
     todays_birthdays = get_todays_birthdays(birthdays)
 
+    print(f"Today's birthdays: {todays_birthdays}")
+
     if todays_birthdays:
         send_birthday_wishes(todays_birthdays)
 
 
 if __name__ == "__main__":
-    send_test_email()
+    # send_test_email()
 
     current_day = get_today()
     today = (current_day[1], current_day[2])

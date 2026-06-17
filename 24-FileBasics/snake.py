@@ -1,7 +1,4 @@
-import math
-import time
 from snake_segment import SnakeSegment
-
 
 class Snake:
     head_colour = "white"
@@ -15,7 +12,6 @@ class Snake:
         game_length,
         game_height,
     ):
-        from turtle import Turtle
 
         self.base_snake_length = base_segment_length
         self.snake_width_factor = snake_width_factor
@@ -39,7 +35,7 @@ class Snake:
         self.game_left = -self.game_right
         self.game_top = game_height / 2 - self.snake_width / 2
         self.game_bottom = -self.game_top
-    
+
     def _create_snake(self):
         self.head_pos = [0, 0]
 

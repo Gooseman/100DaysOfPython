@@ -18,7 +18,7 @@ class States:
         """Check if the provided name matches any state in the list."""
         # print(f"Checking if '{name}' is a valid state...")
         return any(state["name"].lower() == name.lower() for state in self._states)
-    
+
     def get_state_coordinates(self, name):
         """Return the (x, y) coordinates for the given state name, or None if not found."""
         state_generator = (state for state in self._states if state["name"].lower() == name.lower())
@@ -27,5 +27,5 @@ class States:
         if state is None:
             print(f"No state found with name '{name}'")
             raise ValueError(f"No state found with name '{name}'")
-        
+
         return state["x"], state["y"]

@@ -1,6 +1,9 @@
 import random
 import time
 
+import pandas as pd
+import tkinter as tk
+
 from colours import BACKGROUND_COLOR
 
 correct_answers = 0
@@ -9,8 +12,6 @@ incorrect_answer_file = f"data/{time.strftime('%Y%m%d_%H%M%S')}_incorrect_answer
 current_wait = None
 
 def main_window():
-    import tkinter as tk
-
     window = tk.Tk()
 
     window.title("Flash Card")
@@ -19,8 +20,6 @@ def main_window():
     return window
 
 def read_questions():
-    import pandas as pd
-
     questions = list(pd.read_csv("data/french_words.csv").to_dict(orient="records"))
 
     random.shuffle(questions)
@@ -28,7 +27,6 @@ def read_questions():
 
 def mark_as_correct(questions, window, flash_card):
     def mark():
-        global current_wait
         if current_wait is not None:
             window.after_cancel(current_wait)
 
@@ -37,7 +35,7 @@ def mark_as_correct(questions, window, flash_card):
         print(f"Correct answers: {correct_answers}")
 
         window.after(0, lambda: ask_question(questions, window, flash_card))
-    
+
     return mark
 
 def mark_as_incorrect(questions, window, flash_card):
@@ -47,7 +45,7 @@ def mark_as_incorrect(questions, window, flash_card):
             print(f"Cancelling current wait: {current_wait}")
             window.after_cancel(current_wait)
 
-        global incorrect_answers
+        # global incorrect_answers
         print(f"Incorrect answers: {len(incorrect_answers)}")
         incorrect_answers.append(answer)
         save_incorrect_answers(questions, answer)
@@ -75,7 +73,7 @@ def ask_question(questions, window, flash_card):
     if correct_answers + len(incorrect_answers) == len(questions):
         flash_card.set_question("Finished!", f"You got {correct_answers} out of {len(questions)} correct.")
         return
-    
+
     question = questions[correct_answers + len(incorrect_answers)]
 
     print(question)
@@ -84,16 +82,16 @@ def ask_question(questions, window, flash_card):
     global current_wait
     current_wait = window.after(3000, lambda: flash_card.set_question("English", question["English"]))
 
-if __name__ == "__main__":
+def run_app():
     with open(incorrect_answer_file, "w", encoding="utf-8") as file:
         file.write("French,English\n")
-    
+
     window = main_window()
 
     from flash_card import FlashCard
     questions = read_questions()
     flash_card = FlashCard(window)
-    
+
     flash_card.register_handlers(
         mark_as_correct(questions, window, flash_card), 
         mark_as_incorrect(questions, window, flash_card))
@@ -108,3 +106,5 @@ if __name__ == "__main__":
     #     time.sleep(3)
     #     flash_card.set_question("English", question["English"])
 
+if __name__ == "__main__":
+    run_app()

@@ -24,7 +24,7 @@ class Ball:
 
     def get_position(self):
         return self.ball.xcor(), self.ball.ycor()
-    
+
     def get_width(self):
         return self.ball.shapesize()[0] * 20
 
@@ -42,6 +42,6 @@ class Ball:
 
     def is_moving_right(self):
         return self._direction == self._forward
-    
+
     def is_moving_left(self):
         return self._direction == self._backward

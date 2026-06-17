@@ -1,6 +1,6 @@
 from turtle import Screen
 
-from constants import game_width, game_height
+from constants import GAME_WIDTH, GAME_HEIGHT
 from game import Game
 
 def prepare_screen():
@@ -8,12 +8,15 @@ def prepare_screen():
 
     screen.title("Frogger")
     screen.bgcolor("black")
-    screen.setup(width=game_width, height=game_height)
+    screen.setup(width=GAME_WIDTH, height=GAME_HEIGHT)
     screen.tracer(0)
     return screen
 
-if __name__ == "__main__":
+def run_game():
     screen = prepare_screen()
-    game = Game(screen)
 
+    Game(screen)
     screen.exitonclick()
+
+if __name__ == "__main__":
+    run_game()

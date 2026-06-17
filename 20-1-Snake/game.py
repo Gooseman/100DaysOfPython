@@ -7,7 +7,7 @@ class Game:
         self.scoreboard = scoreboard
         self.snake = snake
         self.turn_delay = turn_delay
-     
+
     def run_game(self):
         current_turn_delay = self.turn_delay
 
@@ -20,7 +20,7 @@ class Game:
             current_turn_delay = self._play_game_turn(current_turn_delay)
 
         if self.snake.has_collided():
-            self.handle_end_by_collision()
+            self._handle_end_by_collision()
         else:
             print("No collision detected in 10 moves.")
 
@@ -34,7 +34,7 @@ class Game:
             self._handle_food_eaten()
             print(f"Turn delay before eating food: {turn_delay:.4f} seconds")
             return turn_delay * 0.98
-        
+
         return turn_delay
 
     def _has_eaten_food(self):

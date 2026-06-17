@@ -1,13 +1,13 @@
-base_square_size = 20
-stretch_factor = 0.5
+BASE_SQUARE_SIZE = 20
+STRETCH_FACTOR = 0.5
 
-game_width = 900
-game_height = 700
-court_distance_from_edge = 75
-court_height = game_height - (court_distance_from_edge * 2)
-court_width = game_width - (court_distance_from_edge * 2)
+GAME_WIDTH = 900
+GAME_HEIGHT = 700
+COURT_DISTANCE_FROM_EDGE = 75
+COURT_HEIGHT = GAME_HEIGHT - (COURT_DISTANCE_FROM_EDGE * 2)
+COURT_WIDTH = GAME_WIDTH - (COURT_DISTANCE_FROM_EDGE * 2)
 
-paddle_width = base_square_size * stretch_factor
-paddle_distance_from_edge = paddle_width + 10
-paddle_left_edge = 0
-paddle_right_edge = 1
+PADDLE_WIDTH = BASE_SQUARE_SIZE * STRETCH_FACTOR
+PADDLE_DISTANCE_FROM_EDGE = PADDLE_WIDTH + 10
+PADDLE_LEFT_EDGE = 0
+PADDLE_RIGHT_EDGE = 1

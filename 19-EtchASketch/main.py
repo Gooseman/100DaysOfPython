@@ -5,38 +5,38 @@ from TurtleRace import TurtleRace
 
 def etch_a_sketch(screen):
     def move_forwards():
-        turtle.forward(10)
+        the_turtle.forward(10)
 
     def move_backwards():
-        turtle.backward(10)
+        the_turtle.backward(10)
 
     def on_left_press():
-        turtle.left(10)
+        the_turtle.left(10)
 
     def on_right_press():
-        turtle.right(10)
+        the_turtle.right(10)
 
     def turn_up():
-        turtle.setheading(90)
+        the_turtle.setheading(90)
 
     def turn_down():
-        turtle.setheading(270)
+        the_turtle.setheading(270)
 
     def turn_right():
-        turtle.setheading(0)
+        the_turtle.setheading(0)
 
     def turn_left():
-        turtle.setheading(180)
+        the_turtle.setheading(180)
 
     def reset_drawing():
-        turtle.clear()
-        turtle.penup()
-        turtle.home()
-        turtle.pendown()
+        the_turtle.clear()
+        the_turtle.penup()
+        the_turtle.home()
+        the_turtle.pendown()
 
-    turtle = Turtle()
+    the_turtle = Turtle()
 
-    turtle.speed("fastest")
+    the_turtle.speed("fastest")
     screen.listen()
 
     screen.onkeypress(move_forwards, "Up")
@@ -70,25 +70,27 @@ def turtle_race(screen):
         RacingTurtle(turtle_names[4], "purple"),
     ]
 
-    for index, t in enumerate(turtles):
-        t.turtle.speed("fastest")
-        t.set_postion(-230, -100 + (index * 50))
+    for index, the_turtle in enumerate(turtles):
+        the_turtle.turtle.speed("fastest")
+        the_turtle.set_postion(-230, -100 + (index * 50))
 
     race = TurtleRace(turtles, 230, bet)
 
     race.race()
 
 
-def take_bet(self, turtle_names):
+def take_bet(screen, turtle_names):
     return screen.textinput(
         "Make your bet", f"Which turtle will win the race? {turtle_names}: "
     )
 
-
-if __name__ == "__main__":
+def do_run():
     screen = Screen()
 
     # etch_a_sketch(screen)
     turtle_race(screen)
 
     screen.exitonclick()
+
+if __name__ == "__main__":
+    do_run()

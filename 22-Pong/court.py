@@ -1,6 +1,6 @@
 from turtle import Turtle
 
-from constants import court_distance_from_edge, court_height, court_width
+from constants import COURT_HEIGHT, COURT_WIDTH
 
 
 class Court:
@@ -14,23 +14,23 @@ class Court:
 
     def draw_border(self):
         self.court_lines.goto(
-            (-court_width / 2),
-            (court_height / 2),
+            (-COURT_WIDTH / 2),
+            (COURT_HEIGHT / 2),
         )
         self.court_lines.pensize(1)
         self.court_lines.pendown()
 
         for _ in range(2):
-            self.court_lines.forward(court_width)
+            self.court_lines.forward(COURT_WIDTH)
             self.court_lines.right(90)
-            self.court_lines.forward(court_height)
+            self.court_lines.forward(COURT_HEIGHT)
             self.court_lines.right(90)
 
         self.court_lines.penup()
 
     def draw_center_line(self):
         dash_length = 15
-        line_length = court_height - dash_length * 2
+        line_length = COURT_HEIGHT - dash_length * 2
 
         self.court_lines.goto(0, -line_length / 2)
         self.court_lines.setheading(90)

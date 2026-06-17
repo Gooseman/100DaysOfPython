@@ -1,12 +1,12 @@
-base_square_size = 20
-short_car_factor = 2
-medium_car_factor = 2.5
-long_car_factor = 3.0
-car_length_factors = [short_car_factor, medium_car_factor, long_car_factor]
+BASE_SQUARE_SIZE = 20
+SHORT_CAR_FACTOR = 2
+MEDIUM_CAR_FACTOR = 2.5
+LONG_CAR_FACTOR = 3.0
+CAR_LENGTH_FACTORS = [SHORT_CAR_FACTOR, MEDIUM_CAR_FACTOR, LONG_CAR_FACTOR]
 
-game_width = 800
-game_height = 600
+GAME_WIDTH = 800
+GAME_HEIGHT = 600
 
-car_colours = ["red", "orange", "yellow", "blue", "purple"]
-car_speeds = [base_square_size, base_square_size * 1.25]
-car_travel_increment = 10
+CAR_COLOURS = ["red", "orange", "yellow", "blue", "purple"]
+CAR_SPEEDS = [BASE_SQUARE_SIZE, BASE_SQUARE_SIZE * 1.25]
+CAR_TRAVEL_INCREMENT = 10

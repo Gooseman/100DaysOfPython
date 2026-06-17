@@ -1,12 +1,10 @@
-import time as timer
 from turtle import Turtle
 
 from constants import (
-    court_height,
-    paddle_left_edge,
-    paddle_right_edge,
-    paddle_width,
-    stretch_factor,
+    COURT_HEIGHT,
+    PADDLE_LEFT_EDGE,
+    PADDLE_WIDTH,
+    STRETCH_FACTOR,
 )
 
 
@@ -15,7 +13,7 @@ class Paddle:
     _moving_up = False
     _moving_down = False
     # _move_delay = 0.015
-    _move_distance = paddle_width * 2
+    _move_distance = PADDLE_WIDTH * 2
 
     def __init__(self, screen):
         self.screen = screen
@@ -29,17 +27,17 @@ class Paddle:
         paddle = Turtle()
         paddle.shape("square")
         paddle.color("white")
-        paddle.shapesize(stretch_wid=(Paddle._number_of_segments * stretch_factor), stretch_len=stretch_factor)
+        paddle.shapesize(stretch_wid=(Paddle._number_of_segments * STRETCH_FACTOR), stretch_len=STRETCH_FACTOR)
         paddle.penup()
 
         return paddle
-    
+
     @staticmethod
     def _build_paddle_segment():
         segment = Turtle()
         segment.shape("square")
         segment.color("white")
-        segment.shapesize(stretch_wid=stretch_factor, stretch_len=stretch_factor)
+        segment.shapesize(stretch_wid=STRETCH_FACTOR, stretch_len=STRETCH_FACTOR)
         segment.penup()
         segment.speed("fastest")
 
@@ -47,7 +45,7 @@ class Paddle:
 
     def get_length(self):
         # return len(self._paddle) * paddle_width
-        return Paddle._number_of_segments * paddle_width
+        return Paddle._number_of_segments * PADDLE_WIDTH
         # return self._paddle.shapesize()[0]
 
     def move_to(self, x, y):
@@ -76,8 +74,8 @@ class Paddle:
     def move_up(self):
         # print("Moving paddle up")
 
-        # if self._paddle[0].ycor() >= (court_height / 2) - self._move_distance:
-        if self._paddle.ycor() >= (court_height / 2) - (self.get_length() / 2) - self._move_distance:
+        # if self._paddle[0].ycor() >= (COURT_HEIGHT / 2) - self._move_distance:
+        if self._paddle.ycor() >= (COURT_HEIGHT / 2) - (self.get_length() / 2) - self._move_distance:
             self.stop_moving()
             return
 
@@ -95,7 +93,7 @@ class Paddle:
         # while (
         #     self._moving_down
         #     and self._paddle[len(self._paddle) - 1].ycor()
-        #     > -(court_height / 2) + paddle_width
+        #     > -(COURT_HEIGHT / 2) + paddle_width
         # ):
         #     for segment in self._paddle:
         #         segment.goto(segment.xcor(), segment.ycor() - paddle_width)
@@ -106,8 +104,8 @@ class Paddle:
         # print("Moving paddle down")
 
         if (
-            # self._paddle[len(self._paddle) - 1].ycor() <= -(court_height / 2) + self._move_distance
-            self._paddle.ycor() <= -(court_height / 2) + (self.get_length() / 2) + self._move_distance
+            # self._paddle[len(self._paddle) - 1].ycor() <= -(COURT_HEIGHT / 2) + self._move_distance
+            self._paddle.ycor() <= -(COURT_HEIGHT / 2) + (self.get_length() / 2) + self._move_distance
         ):
             return
 
@@ -123,8 +121,8 @@ class Paddle:
         paddle_x = self._get_edge_x(edge)
         length = self.get_length()
         paddle_y_range = (
-            # self._paddle[0].ycor() + paddle_width / 2,
-            # self._paddle[-1].ycor() - paddle_width / 2,
+            # self._paddle[0].ycor() + PADDLE_WIDTH / 2,
+            # self._paddle[-1].ycor() - PADDLE_WIDTH / 2,
             self._paddle.ycor() + (length / 2),
             self._paddle.ycor() - (length / 2),
         )
@@ -133,9 +131,9 @@ class Paddle:
         return (paddle_x, paddle_y_range)
 
     def _get_edge_x(self, edge):
-        if paddle_left_edge == edge:
-            # return self._paddle[0].xcor() - (paddle_width / 2)
-            return self._paddle.xcor() - (paddle_width / 2)
+        if PADDLE_LEFT_EDGE == edge:
+            # return self._paddle[0].xcor() - (PADDLE_WIDTH / 2)
+            return self._paddle.xcor() - (PADDLE_WIDTH / 2)
 
-        # return self._paddle[0].xcor() + (paddle_width / 2)
-        return self._paddle.xcor() + (paddle_width / 2)
+        # return self._paddle[0].xcor() + (PADDLE_WIDTH / 2)
+        return self._paddle.xcor() + (PADDLE_WIDTH / 2)

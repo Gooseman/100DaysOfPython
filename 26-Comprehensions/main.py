@@ -3,12 +3,21 @@
 
 
 def get_shared_numbers():
-    file1 = open("file1.txt").readlines()
-    file2 = open("file2.txt").readlines()
+    try:
+        file1 = open("file1.txt").readlines()
+        file2 = open("file2.txt").readlines()
 
-    # Use a set comprehension to find the unique numbers in file1 that are not in file2
-    # shared_numbers = {int(num) for num in file1 if num in file2}
-    shared_numbers = [int(num) for num in file1 if num in file2]
+        # Use a set comprehension to find the unique numbers in file1 that are not in file2
+        # shared_numbers = {int(num) for num in file1 if num in file2}
+        shared_numbers = [int(num) for num in file1 if num in file2]
+    except FileNotFoundError as e:
+        print(f"Error: {e}")
+        shared_numbers = []
+    finally:
+        if 'file1' in locals():
+            file1.close()
+        if 'file2' in locals():
+            file2.close()
 
     print(shared_numbers)
     print(sorted(shared_numbers))
@@ -50,8 +59,10 @@ def nato():
 def nato_dictionary(nato_data):
     return {row.letter: row.code for (_, row) in nato_data.iterrows()}
 
-
-if __name__ == "__main__":
+def run_app():
     get_shared_numbers()
     get_fahrenheit()
     nato()
+
+if __name__ == "__main__":
+    run_app()

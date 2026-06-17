@@ -1,11 +1,11 @@
 
 from turtle import Turtle
 
-from constants import base_square_size, game_width, game_height
+from constants import BASE_SQUARE_SIZE, GAME_WIDTH, GAME_HEIGHT
 
 class Frog(Turtle):
-    _move_size = base_square_size * 2
-    
+    _move_size = BASE_SQUARE_SIZE * 2
+
     def __init__(self):
         super().__init__()
         self.shape("turtle")
@@ -15,39 +15,39 @@ class Frog(Turtle):
 
     def reset(self):
         print("Resetting frog position.")
-        self.goto(0, -game_height / 2 + base_square_size)
+        self.goto(0, -GAME_HEIGHT / 2 + BASE_SQUARE_SIZE)
         self.setheading(90)
 
     def move_up(self):
-        if (self.ycor() + self._move_size) >= (game_height / 2):
+        if (self.ycor() + self._move_size) >= (GAME_HEIGHT / 2):
             return
-        
+
         self.setheading(90)
         self.forward(self._move_size)
-    
+
     def move_down(self):
-        if (self.ycor() - self._move_size) <= -(game_height / 2):
+        if (self.ycor() - self._move_size) <= -(GAME_HEIGHT / 2):
             return
-        
+
         self.setheading(90)
         self.backward(self._move_size)
-    
+
     def move_left(self):
-        if (self.xcor() - self._move_size) <= -(game_width / 2):
+        if (self.xcor() - self._move_size) <= -(GAME_WIDTH / 2):
             return
-            
+
         self.setheading(180)
         self.forward(self._move_size)
-    
+
     def move_right(self):
-        if (self.xcor() + self._move_size) >= (game_width / 2):
+        if (self.xcor() + self._move_size) >= (GAME_WIDTH / 2):
             return
-        
+
         self.setheading(0)
         self.forward(self._move_size)
-    
+
     def get_right_edge(self):
-        return self.xcor() + base_square_size / 2
-    
+        return self.xcor() + BASE_SQUARE_SIZE / 2
+
     def get_y_position(self):
         return self.ycor()

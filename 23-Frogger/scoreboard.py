@@ -1,7 +1,7 @@
 
 from turtle import Turtle
 
-from constants import game_height, game_width
+from constants import GAME_HEIGHT, GAME_WIDTH
 
 class Scoreboard(Turtle):
     def __init__(self):
@@ -13,13 +13,13 @@ class Scoreboard(Turtle):
 
     def update_scoreboard(self):
         self.clear()
-        self.goto(-game_width / 2 + 30, game_height / 2 - 20)
+        self.goto(-GAME_WIDTH / 2 + 30, GAME_HEIGHT / 2 - 20)
         self.write(f"Level: {self.level}", align="center", font=("Arial", 12, "normal"))
 
     def increase_level(self):
         self.level += 1
         self.update_scoreboard()
-    
+
     def game_over(self):
         self.goto(0, 0)
         self.write("GAME OVER", align="center", font=("Arial", 36, "bold"))

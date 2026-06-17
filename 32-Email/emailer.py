@@ -1,22 +1,22 @@
 import os
 import smtplib
 
-_sender_account = os.environ.get("BIRTHDAY_SENDER_ACC_ADDRESS")
-_sender_email = os.environ.get("BIRTHDAY_SENDER_EMAIL")
-_smtp_server = os.environ.get("BIRTHDAY_SENDER_SMTP_SERVER")
-_pwd = os.environ.get("BIRTHDAY_SENDER_PASSWORD")
-_port_number = 587
+SESNDER_ACCOUNT = os.environ.get("BIRTHDAY_SENDER_ACC_ADDRESS")
+SENDER_EMAIL = os.environ.get("BIRTHDAY_SENDER_EMAIL")
+SMTP_SERVER = os.environ.get("BIRTHDAY_SENDER_SMTP_SERVER")
+PWD = os.environ.get("BIRTHDAY_SENDER_PASSWORD")
+PORT_NUMBER = 587
 
 
 def start_connection():
     """Starts a connection to the SMTP server and logs in with the provided credentials."""
-    connection = smtplib.SMTP(_smtp_server, _port_number)
+    connection = smtplib.SMTP(SMTP_SERVER, PORT_NUMBER)
 
     connection.starttls()
-    connection.login(user=_sender_account, password=_pwd)
+    connection.login(user=SESNDER_ACCOUNT, password=PWD)
     return connection
 
 
 def send_email(connection, to_email, subject, body):
     """Sends an email using the provided SMTP connection."""
-    connection.sendmail(_sender_email, to_email, f"Subject: {subject}\n\n{body}")
+    connection.sendmail(SENDER_EMAIL, to_email, f"Subject: {subject}\n\n{body}")

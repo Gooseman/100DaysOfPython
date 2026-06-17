@@ -1,12 +1,11 @@
+from csv import reader
 import pandas
 
-_file_path = "weather_data.csv"
+FILE_PATH = "weather_data.csv"
 
 
 def read_csv(file_path):
-    from csv import reader
-
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="utf-8") as file:
         data = list(reader(file))
 
     return data
@@ -30,19 +29,18 @@ def max_temperature(temperatures):
     max_temp = temperatures[0]
 
     for temp in temperatures:
-        if temp > max_temp:
-            max_temp = temp
+        max_temp = max(max_temp, temp)
 
     return max_temp
 
 
 def use_file(file_path):
-    data = read_csv(_file_path)
+    data = read_csv(file_path)
 
     for line in data:
         print(line)
 
-    temperatures = read_temperatures(_file_path)
+    temperatures = read_temperatures(file_path)
 
     print(temperatures)
     print(f"Average temperature: {average_temperature(temperatures)}")
@@ -97,7 +95,9 @@ def use_pandas(file_path):
 
     print(f"Monday's temperature in Fahrenheit: {pandas_day_temp_fahrenheit(data, 'Monday')}")
 
+def run_app():
+    use_file(FILE_PATH)
+    use_pandas(FILE_PATH)
 
 if __name__ == "__main__":
-    use_file(_file_path)
-    use_pandas(_file_path)
+    run_app()

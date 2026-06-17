@@ -2,7 +2,7 @@ import threading
 import time
 
 from constants import WORK_MIN, SHORT_BREAK_MIN, LONG_BREAK_MIN
-from states import idle_state, work_state, short_break_state, long_break_state
+from states import IDLE_STATE, WORK_STATE, SHORT_BREAK_STATE, LONG_BREAK_STATE
 
 class Timer:
     _num_work_sessions = 4
@@ -20,20 +20,20 @@ class Timer:
         self._start_timer()
 
     def _update_state(self):
-        if self.state == idle_state:
-            self.state = work_state
-        elif self.state == work_state:
+        if self.state == IDLE_STATE:
+            self.state = WORK_STATE
+        elif self.state == WORK_STATE:
             self._work_sessions += 1
             # print(f"Work sessions completed: {self._work_sessions}")
 
             if self._work_sessions % self._num_work_sessions == 0:
-                self.state = long_break_state
+                self.state = LONG_BREAK_STATE
             else:
-                self.state = short_break_state
-            
+                self.state = SHORT_BREAK_STATE
+
             self._on_work_session_complete()
         else:
-            self.state = work_state
+            self.state = WORK_STATE
 
         self._on_state_change(self.state)
 
@@ -44,11 +44,11 @@ class Timer:
         # self._run_timer()
 
     def _get_duration(self):
-        if self.state == work_state:
+        if self.state == WORK_STATE:
             return WORK_MIN * 60
-        elif self.state == short_break_state:
+        elif self.state == SHORT_BREAK_STATE:
             return SHORT_BREAK_MIN * 60
-        elif self.state == long_break_state:
+        elif self.state == LONG_BREAK_STATE:
             return LONG_BREAK_MIN * 60
         # if self.state == work_state:
         #     return 10
@@ -58,7 +58,7 @@ class Timer:
         #     return 5
 
     def _run_timer(self):
-        while self.state != idle_state:
+        while self.state != IDLE_STATE:
             remaining_time = self._end_at - time.time()
             # print(f"Remaining time: {remaining_time:.2f} seconds")
 
@@ -70,12 +70,11 @@ class Timer:
 
                 self._start_timer()
                 return
-            else:
-                self._update_remaining_time(remaining_time)
-            
+
+            self._update_remaining_time(remaining_time)
             time.sleep(1)
 
     def reset(self):
-        self.state = idle_state
+        self.state = IDLE_STATE
         self._work_sessions = 0
         self._end_at = None

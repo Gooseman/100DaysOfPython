@@ -11,7 +11,7 @@ class Scoreboard:
         self._set_score_pen()
         self.high_score = HighScore()
         self._update_scoreboard()
-    
+
     def _set_score_pen(self):
         self.pen.color("white")
         self.pen.penup()

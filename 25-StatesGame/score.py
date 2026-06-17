@@ -31,7 +31,7 @@ class Score:
 
     def get_score(self):
         return len(self._named)
-    
+
     def reset(self):
         """Reset the score to zero and clear all named states."""
         self._named.clear()

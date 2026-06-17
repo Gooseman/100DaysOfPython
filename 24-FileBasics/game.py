@@ -8,12 +8,12 @@ class Game:
         self.snake = snake
         self.turn_delay = turn_delay
         self._game_over = True
-     
+
     def run_game(self):
         if not self._game_over:
             print("Game is already running.")
             return
-        
+
         self._game_over = False
         current_turn_delay = self.turn_delay
         self._reset()
@@ -27,7 +27,7 @@ class Game:
             if self._game_over:
                 self._on_game_over()
                 current_turn_delay = self.turn_delay
-    
+
     def _reset(self):
         self.scoreboard.reset()
         self.snake.reset()
@@ -50,7 +50,7 @@ class Game:
             self._handle_food_eaten()
             print(f"Turn delay before eating food: {turn_delay:.4f} seconds")
             return turn_delay * 0.98
-        
+
         return turn_delay
 
     def _has_eaten_food(self):
@@ -71,7 +71,7 @@ class Game:
         self.snake.grow()
         self.food_placer.place_food(self.snake.get_snake_positions(), self.snake.get_snake_width())
         self.scoreboard.increase_score()
-    
+
     def _on_game_over(self):
         self._handle_end_by_collision()
 

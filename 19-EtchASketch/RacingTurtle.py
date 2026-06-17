@@ -1,4 +1,3 @@
-import random
 from turtle import Turtle
 
 class RacingTurtle:
@@ -10,7 +9,7 @@ class RacingTurtle:
         self.turtle.goto(-200, 0)
         self.turtle.pendown()
         self.name = name
-    
+
     def set_postion(self, x, y, heading=0):
         self.turtle.penup()
         self.turtle.goto(x, y)

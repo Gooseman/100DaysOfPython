@@ -1,10 +1,8 @@
 import math
-
+from turtle import Turtle
 
 class SnakeSegment:
     def __init__(self, position, base_size, size_factor, colour="white"):
-        from turtle import Turtle
-
         self.size = base_size * size_factor
         self.segment = Turtle("square")
 
@@ -15,9 +13,6 @@ class SnakeSegment:
         self.last_position = position
         self.segment.resizemode("user")
         self.segment.shapesize(stretch_len=size_factor, stretch_wid=size_factor)
-
-    def increase_speed():
-        pass
 
     def move_forward(self):
         # print("moving from position:", self.segment.position())

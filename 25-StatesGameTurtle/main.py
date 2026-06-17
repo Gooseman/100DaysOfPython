@@ -1,24 +1,25 @@
-import pandas
 import turtle as ttle
 
-_map_image = "blank_states_img.gif"
+import pandas
+
+MAP_IMAGE = "blank_states_img.gif"
 
 
 def prepare_screen():
     screen = ttle.Screen()
     screen.title("USA States Game")
-    screen.addshape(_map_image)
+    screen.addshape(MAP_IMAGE)
 
     return screen
 
 
 def prepare_turtle():
-    turtle = ttle.Turtle()
+    the_turtle = ttle.Turtle()
 
-    turtle.shape(_map_image)
-    # turtle.penup()
+    the_turtle.shape(MAP_IMAGE)
+    # the_turtle.penup()
 
-    return turtle
+    return the_turtle
 
 
 def get_states_data():
@@ -39,21 +40,21 @@ def get_state_input(screen, score):
 def display_state(state_name, states_data):
     """Display the state name on the map at the correct coordinates."""
     try:
-        # title() converts the string to title case which matches the format in the CSV file 
+        # title() converts the string to title case which matches the format in the CSV file
         # (e.g. "new york" -> "New York")
         state_info = states_data[states_data.state == state_name.title()].iloc[0]
         x, y = int(state_info.x), int(state_info.y)
-        turtle = ttle.Turtle()
-        turtle.hideturtle()
-        turtle.penup()
+        the_turtle = ttle.Turtle()
+        the_turtle.hideturtle()
+        the_turtle.penup()
 
-        turtle.goto(x, y)
-        turtle.write(state_info.state, align="center", font=("Arial", 10, "normal"))
+        the_turtle.goto(x, y)
+        the_turtle.write(state_info.state, align="center", font=("Arial", 10, "normal"))
     except IndexError:
         print(f"State '{state_info}' not found in data.")
 
 
-def play_game(states_data, state_names):
+def play_game(states_data, state_names, screen, the_turtle):
     score = 0
 
     while score < 50:
@@ -63,13 +64,15 @@ def play_game(states_data, state_names):
             display_state(guess, states_data)
             score += 1
 
-
-if __name__ == "__main__":
+def run_app():
     print("Welcome to the USA States Game!")
 
     screen = prepare_screen()
-    turtle = prepare_turtle()
     states_data = get_states_data()
     state_names = states_data.state.str.lower().tolist()
 
-    play_game(states_data, state_names)
+    prepare_turtle()
+    play_game(states_data, state_names, screen)
+
+if __name__ == "__main__":
+    run_app()

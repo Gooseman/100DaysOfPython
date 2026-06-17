@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import font as tkfont, ttk
 
-import map
+import game_map
 import score
 import state_entry
 from states import States
@@ -55,7 +55,7 @@ class GameBoard:
         self.canvas.pack(fill="both", expand=True)
 
         # Create map embedded into the canvas
-        self.game_map = map.Map(canvas=self.canvas)
+        self.game_map = game_map.GameMap(canvas=self.canvas)
 
     def _reset_game(self):
         """Reset the game to its initial state."""

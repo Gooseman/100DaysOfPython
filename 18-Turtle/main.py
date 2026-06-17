@@ -3,21 +3,21 @@ from turtle import Turtle, Screen, colormode
 
 import colorgram
 
-dot_size = 10
+DOT_SIZE = 10
 
-def dashed_line(turtle, length, dash_length):
+def dashed_line(the_turtle, length, dash_length):
     for _ in range(length // dash_length):
-        turtle.pendown()
-        turtle.forward(dash_length)
-        turtle.penup()
-        turtle.forward(dash_length)
+        the_turtle.pendown()
+        the_turtle.forward(dash_length)
+        the_turtle.penup()
+        the_turtle.forward(dash_length)
 
-def draw_shape(turtle, side_length, sides):
+def draw_shape(the_turtle, side_length, sides):
     angle = 360 / sides
 
     for _ in range(sides):
-        turtle.forward(side_length)
-        turtle.right(angle)
+        the_turtle.forward(side_length)
+        the_turtle.right(angle)
 
 def random_colour():
     red = random.random()
@@ -25,40 +25,40 @@ def random_colour():
     blue = random.random()
 
     return (red, green, blue)
-                         
-def draw_all_shapes(turtle, side_length):
-    for sides in range(3, 11):
-        turtle.color(random_colour())
-        draw_shape(turtle, side_length, sides)
 
-def random_walk(turtle, steps, step_length):
+def draw_all_shapes(the_turtle, side_length):
+    for sides in range(3, 11):
+        the_turtle.color(random_colour())
+        draw_shape(the_turtle, side_length, sides)
+
+def random_walk(the_turtle, steps, step_length):
     directions = [0, 90, 180, 270]
-    
-    turtle.width(5)
-    turtle.speed('fastest')
+
+    the_turtle.width(5)
+    the_turtle.speed('fastest')
 
     for _ in range(steps):
-        turtle.color(random_colour())
-        turtle.setheading(random.choice(directions))
-        turtle.forward(step_length)
+        the_turtle.color(random_colour())
+        the_turtle.setheading(random.choice(directions))
+        the_turtle.forward(step_length)
 
-def spirograph(turtle, radius, angle):
-    turtle.speed('fastest')
-    turtle.width(2)
+def spirograph(the_turtle, radius, angle):
+    the_turtle.speed('fastest')
+    the_turtle.width(2)
 
     for _ in range(int(360 / angle)):
-        turtle.color(random_colour())
-        turtle.circle(radius)
-        turtle.setheading(turtle.heading() + angle)
+        the_turtle.color(random_colour())
+        the_turtle.circle(radius)
+        the_turtle.setheading(the_turtle.heading() + angle)
 
-def spirograph01(turtle, min_radius, max_radius, angle):
-    turtle.speed('fastest')
-    turtle.width(2)
+def spirograph01(the_turtle, min_radius, max_radius, angle):
+    the_turtle.speed('fastest')
+    the_turtle.width(2)
 
     current_circle = 0
 
     for _ in range(int(360 // angle)):
-        turtle.color(random_colour())
+        the_turtle.color(random_colour())
 
         if (current_circle % 2) == 0:
             radius = min_radius
@@ -66,11 +66,11 @@ def spirograph01(turtle, min_radius, max_radius, angle):
             radius = max_radius
 
         current_circle += 1
-        turtle.circle(radius)
-        turtle.setheading(turtle.heading() + angle)
+        the_turtle.circle(radius)
+        the_turtle.setheading(the_turtle.heading() + angle)
 
 def get_colours():
-    colours = colorgram.extract('D:\MMedia\Images\spires_by_itsthemojo_d2y4aa3.jpg', 8)
+    colours = colorgram.extract(r'D:\MMedia\Images\spires_by_itsthemojo_d2y4aa3.jpg', 8)
 
     def get_colour_tuple(colour):
         r = colour.rgb.r
@@ -91,42 +91,45 @@ def get_random_colours(num_colours):
 
     return [get_colour_tuple() for _ in range(num_colours)]
 
-def draw_dot_grid(turtle, num_rows, num_cols, dot_size, spacing):
+def draw_dot_grid(the_turtle, num_rows, num_cols, dot_size, spacing):
     colours = get_random_colours(10)
 
-    turtle.hideturtle()
-    turtle.speed('fastest')
+    the_turtle.hideturtle()
+    the_turtle.speed('fastest')
     colormode(255)
-    turtle.penup()
-    turtle.goto(-spacing * num_cols / 2, -spacing * num_rows / 2)
+    the_turtle.penup()
+    the_turtle.goto(-spacing * num_cols / 2, -spacing * num_rows / 2)
 
     for _ in range(num_rows):
         for _ in range(num_cols):
-            turtle.pendown()
-            turtle.dot(dot_size, random.choice(colours))
-            turtle.penup()
-            turtle.forward(spacing)
-        
-        turtle.penup()
-        turtle.left(90)
-        turtle.forward(spacing)
-        turtle.left(90)
-        turtle.forward(spacing * num_cols)
-        turtle.left(180)
+            the_turtle.pendown()
+            the_turtle.dot(dot_size, random.choice(colours))
+            the_turtle.penup()
+            the_turtle.forward(spacing)
 
-if __name__ == '__main__':
+        the_turtle.penup()
+        the_turtle.left(90)
+        the_turtle.forward(spacing)
+        the_turtle.left(90)
+        the_turtle.forward(spacing * num_cols)
+        the_turtle.left(180)
+
+def do_run():
     screen = Screen()
-    turtle = Turtle()
+    the_turtle = Turtle()
 
-    # turtle.shape("turtle")
-    # turtle.color("blue")
+    # the_turtle.shape("the_turtle")
+    # the_turtle.color("blue")
 
-    # draw_all_shapes(turtle, 50)
-    # random_walk(turtle, 20, 20)
-    # spirograph(turtle, 100, 5)
-    # spirograph01(turtle, 100, 150, 10)
-    draw_dot_grid(turtle, 10, 10, 25, 15)
+    # draw_all_shapes(the_turtle, 50)
+    # random_walk(the_turtle, 20, 20)
+    # spirograph(the_turtle, 100, 5)
+    # spirograph01(the_turtle, 100, 150, 10)
+    draw_dot_grid(the_turtle, 10, 10, 25, 15)
 
-    turtle.color('')
+    the_turtle.color('')
     # Keep this at the bottom to exit
     screen.exitonclick()
+
+if __name__ == '__main__':
+    do_run()

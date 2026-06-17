@@ -5,12 +5,10 @@ from game import Game
 from scoreboard import Scoreboard
 from snake import Snake
 
-
-if __name__ == "__main__":
+def run_game():
     base_snake_length = 20
     snake_width_factor = 0.75
     snake_initial_segments = 8
-    snake_initial_length_factor = snake_initial_segments * snake_width_factor
     game_length = 600
     game_height = 600
     screen = Screen()
@@ -33,3 +31,5 @@ if __name__ == "__main__":
     # game.run_game()
     screen.exitonclick()
 
+if __name__ == "__main__":
+    run_game()

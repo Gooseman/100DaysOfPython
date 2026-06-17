@@ -3,6 +3,7 @@ import tkinter as tk
 
 class MgrUi:
     def __init__(self):
+        self._create_window()
         pass
 
     def _create_window(self):

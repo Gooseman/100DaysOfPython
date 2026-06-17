@@ -1,7 +1,7 @@
 import tkinter as tk
 
 
-class Map:
+class GameMap:
     BG_IMAGE = "blank_states_img.gif"
 
     def __init__(self, canvas):

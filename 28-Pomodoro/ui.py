@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import PhotoImage
 
 from constants import GREEN
-from states import long_break_state
+from states import LONG_BREAK_STATE
 
 class PomodoroUI:
     _idle_state = "Ready"
@@ -45,7 +45,8 @@ class PomodoroUI:
         button_frame.columnconfigure(0, weight=1)
         button_frame.columnconfigure(2, weight=1)
 
-        self._start_button = tk.Button(button_frame, text="Start", borderwidth=1, relief="ridge", command=self._on_start_clicked)
+        self._start_button = \
+            tk.Button(button_frame, text="Start", borderwidth=1, relief="ridge", command=self._on_start_clicked)
         self._reset_button = tk.Button(button_frame, text="Reset", borderwidth=1, relief="ridge", command=on_reset)
 
         self._start_button.grid(row=0, column=0, sticky="w")
@@ -53,14 +54,14 @@ class PomodoroUI:
         self._check_marks.grid(row=0, column=1)
         self._reset_button.grid(row=0, column=2, sticky="e")
         self._reset_button.config(state="disabled")
-    
+
         # This annoying piece of code is here to make sure the check marks frame is tall enough to accommodate the
         # check marks when they are added. If the frame is too short, it will expand when the first check mark is added,
         # resulting in the window changing size.
         self.add_check_mark()
         self._check_marks.update_idletasks()
         self._clear_check_marks()
-    
+
     def _on_start_clicked(self):
         self._start_button.config(state="disabled")
         self._reset_button.config(state="normal")
@@ -77,31 +78,31 @@ class PomodoroUI:
         # self._check_marks.update_idletasks()
         # self._clear_check_marks()
         pass
-    
+
     def _start_loop(self):
         self._window.mainloop()
-    
+
     def update_time_remaining(self, remaining_time):
         minutes = int(remaining_time // 60)
         seconds = int(remaining_time % 60)
 
         self._time.after(0, lambda: self._time.config(text=f"{minutes:02d}:{seconds:02d}"))
-    
+
     def set_state(self, text):
         self._state.after(0, lambda: self._state.config(text=text))
 
-        if text == long_break_state:
+        if text == LONG_BREAK_STATE:
             for tick in self._check_marks.winfo_children():
                 tick.destroy()
-    
+
     def _clear_check_marks(self):
         for tick in self._check_marks.winfo_children():
             tick.destroy()
-    
+
     def add_check_mark(self):
         check_mark = tk.Label(self._check_marks, text="✔", font=("Courier", 16, "bold"), fg=GREEN)
         check_mark.pack(side="left")
-    
+
     def reset(self):
         self._state.config(text=self._idle_state)
         self._time.config(text="00:00")

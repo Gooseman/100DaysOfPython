@@ -45,9 +45,11 @@ def get_age(birth_year):
 
     if age.endswith("1") and not age.endswith("11"):
         return f"{age}st"
-    elif age.endswith("2") and not age.endswith("12"):
+
+    if age.endswith("2") and not age.endswith("12"):
         return f"{age}nd"
-    elif age.endswith("3") and not age.endswith("13"):
+
+    if age.endswith("3") and not age.endswith("13"):
         return f"{age}rd"
-    else:
-        return f"{age}th"
+
+    return f"{age}th"

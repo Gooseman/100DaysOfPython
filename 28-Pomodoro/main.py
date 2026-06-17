@@ -1,5 +1,4 @@
-from states import idle_state, work_state, short_break_state, long_break_state
-from timer import Timer
+from pomodoro_timer import Timer
 from ui import PomodoroUI
 
 def on_start():

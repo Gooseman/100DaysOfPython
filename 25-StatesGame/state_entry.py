@@ -45,7 +45,7 @@ class StateEntry:
     def get(self):
         """Return the current text in the entry box."""
         return self.entry.get()
-    
+
     def disable(self):
         """Disable the entry box to prevent further input."""
         self._clear_entry()

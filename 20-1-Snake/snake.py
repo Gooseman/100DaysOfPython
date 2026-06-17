@@ -1,5 +1,3 @@
-import math
-import time
 from snake_segment import SnakeSegment
 
 
@@ -15,8 +13,6 @@ class Snake:
         game_length,
         game_height,
     ):
-        from turtle import Turtle
-
         self.base_snake_length = base_segment_length
         self.snake_width_factor = snake_width_factor
         self.snake_width = snake_width_factor * base_segment_length

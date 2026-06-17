@@ -13,7 +13,10 @@ def create_ui():
     km_output.grid(row=1, column=1, padx=10, pady=5)
     miles_entry.grid(row=0, column=1, padx=10, pady=5)
     miles_entry.focus()
-    tk.Button(window, text="Convert", command=lambda: miles_to_km(miles_entry.get(), km_output)).grid(row=2, column=0, columnspan=2, pady=10)
+    tk.Button(
+        window, 
+        text="Convert", 
+        command=lambda: miles_to_km(miles_entry.get(), km_output)).grid(row=2, column=0, columnspan=2, pady=10)
 
     return window
 
@@ -25,7 +28,10 @@ def miles_to_km(miles, output):
     except ValueError:
         output.config(text="Invalid input")
 
-if __name__ == "__main__":
+def run_app():
     window = create_ui()
 
     window.mainloop()
+
+if __name__ == "__main__":
+    run_app()

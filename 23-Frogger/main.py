@@ -15,7 +15,7 @@ def prepare_screen():
 def run_game():
     screen = prepare_screen()
 
-    Game(screen)
+    Game(screen) # pylint: disable=no-value-for-parameter
     screen.exitonclick()
 
 if __name__ == "__main__":

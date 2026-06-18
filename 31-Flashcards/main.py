@@ -1,15 +1,16 @@
 import random
 import time
-
-import pandas as pd
 import tkinter as tk
 
-from colours import BACKGROUND_COLOR
+import pandas as pd
 
-correct_answers = 0
-incorrect_answers = []
-incorrect_answer_file = f"data/{time.strftime('%Y%m%d_%H%M%S')}_incorrect_answers.csv"
-current_wait = None
+from colours import BACKGROUND_COLOR
+from flash_card import FlashCard
+
+CORRECT_ANSWERS = 0
+INCORRECT_ANSWERS = []
+INCORRECT_ANSWER_FILE = f"data/{time.strftime('%Y%m%d_%H%M%S')}_incorrect_answers.csv"
+CURRENT_WAIT = None
 
 def main_window():
     window = tk.Tk()
@@ -27,12 +28,12 @@ def read_questions():
 
 def mark_as_correct(questions, window, flash_card):
     def mark():
-        if current_wait is not None:
-            window.after_cancel(current_wait)
+        if CURRENT_WAIT is not None:
+            window.after_cancel(CURRENT_WAIT)
 
-        global correct_answers
-        correct_answers += 1
-        print(f"Correct answers: {correct_answers}")
+        global CORRECT_ANSWERS
+        CORRECT_ANSWERS += 1
+        print(f"Correct answers: {CORRECT_ANSWERS}")
 
         window.after(0, lambda: ask_question(questions, window, flash_card))
 
@@ -40,14 +41,12 @@ def mark_as_correct(questions, window, flash_card):
 
 def mark_as_incorrect(questions, window, flash_card):
     def mark(answer):
-        global current_wait
-        if current_wait is not None:
-            print(f"Cancelling current wait: {current_wait}")
-            window.after_cancel(current_wait)
+        if CURRENT_WAIT is not None:
+            print(f"Cancelling current wait: {CURRENT_WAIT}")
+            window.after_cancel(CURRENT_WAIT)
 
-        # global incorrect_answers
-        print(f"Incorrect answers: {len(incorrect_answers)}")
-        incorrect_answers.append(answer)
+        print(f"Incorrect answers: {len(INCORRECT_ANSWERS)}")
+        INCORRECT_ANSWERS.append(answer)
         save_incorrect_answers(questions, answer)
 
         window.after(0, lambda: ask_question(questions, window, flash_card))
@@ -55,7 +54,7 @@ def mark_as_incorrect(questions, window, flash_card):
     return mark
 
 def save_incorrect_answers(questions, answer):
-    with open(incorrect_answer_file, "a", encoding="utf-8") as file:
+    with open(INCORRECT_ANSWER_FILE, "a", encoding="utf-8") as file:
         # Find the question that corresponds to the answer and write it to the file. This is not very efficient, but i
         # works for this small dataset.
         print(f"Saving incorrect answer: {answer}")
@@ -63,37 +62,36 @@ def save_incorrect_answers(questions, answer):
             print(f"Checking question: {question['English']} against answer: {answer}")
             # Assume, for now, that there isn't a word in french which is spelt the same as a word in english, but has
             # a different meaning. If there is, this will need to be changed to check both the french and english words.
-            if question["French"] == answer or question["English"] == answer:
+            if answer in (question["French"], question["English"]):
                 print(f"Found question: {question['French']} for answer: {answer}")
                 file.write(f"{question['French']},{question['English']}\n")
                 break
 
 
 def ask_question(questions, window, flash_card):
-    if correct_answers + len(incorrect_answers) == len(questions):
-        flash_card.set_question("Finished!", f"You got {correct_answers} out of {len(questions)} correct.")
+    if CORRECT_ANSWERS + len(INCORRECT_ANSWERS) == len(questions):
+        flash_card.set_question("Finished!", f"You got {CORRECT_ANSWERS} out of {len(questions)} correct.")
         return
 
-    question = questions[correct_answers + len(incorrect_answers)]
+    question = questions[CORRECT_ANSWERS + len(INCORRECT_ANSWERS)]
 
     print(question)
     flash_card.set_question("French", question["French"])
 
-    global current_wait
-    current_wait = window.after(3000, lambda: flash_card.set_question("English", question["English"]))
+    global CURRENT_WAIT
+    CURRENT_WAIT = window.after(3000, lambda: flash_card.set_question("English", question["English"]))
 
 def run_app():
-    with open(incorrect_answer_file, "w", encoding="utf-8") as file:
+    with open(INCORRECT_ANSWER_FILE, "w", encoding="utf-8") as file:
         file.write("French,English\n")
 
     window = main_window()
 
-    from flash_card import FlashCard
     questions = read_questions()
     flash_card = FlashCard(window)
 
     flash_card.register_handlers(
-        mark_as_correct(questions, window, flash_card)
+        mark_as_correct(questions, window, flash_card),
         mark_as_incorrect(questions, window, flash_card))
 
     window.after(0, lambda: ask_question(questions, window, flash_card))

@@ -46,9 +46,11 @@ class Timer:
     def _get_duration(self):
         if self.state == WORK_STATE:
             return WORK_MIN * 60
-        elif self.state == SHORT_BREAK_STATE:
+
+        if self.state == SHORT_BREAK_STATE:
             return SHORT_BREAK_MIN * 60
-        elif self.state == LONG_BREAK_STATE:
+
+        if self.state == LONG_BREAK_STATE:
             return LONG_BREAK_MIN * 60
         # if self.state == work_state:
         #     return 10
@@ -56,6 +58,8 @@ class Timer:
         #     return 3
         # elif self.state == long_break_state:
         #     return 5
+
+        return IDLE_STATE
 
     def _run_timer(self):
         while self.state != IDLE_STATE:

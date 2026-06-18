@@ -26,7 +26,7 @@ class Game:
 
 
     def _play_game_turn(self, turn_delay):
-        self.snake.move()        
+        self.snake.move()
         self.screen.update()
         sleep(turn_delay)
 
@@ -45,10 +45,8 @@ class Game:
         food_x, food_y = self.food_placer.get_position()
 
         return (
-            head_x_range[0] <= food_x
-            and food_x <= head_x_range[1]
-            and head_y_range[0] <= food_y
-            and food_y <= head_y_range[1]
+            head_x_range[0] <= food_x <= head_x_range[1]
+            and head_y_range[0] <= food_y <= head_y_range[1]
         )
 
 

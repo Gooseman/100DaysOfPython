@@ -2,13 +2,13 @@ from data import question_data
 from question import Question
 from quiz import Quiz
 
-def play(quiz):
-    while quiz.next_question():
-        user_answer = quiz.ask_question()
+def play(the_quiz):
+    while the_quiz.next_question():
+        user_answer = the_quiz.ask_question()
 
-        quiz.check_answer(user_answer)
+        the_quiz.check_answer(user_answer)
 
-    [score, num_questions] = quiz.score_quiz()
+    [score, num_questions] = the_quiz.score_quiz()
 
     print(f"You've completed the quiz! Your final score is: {score} ({score/num_questions*100:.2f}%)")
 

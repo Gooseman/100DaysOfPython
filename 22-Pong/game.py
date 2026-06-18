@@ -137,12 +137,11 @@ class Game:
         # is_past_right_paddle: {is_past_right_paddle}")
 
         if is_past_right_paddle:
-            self._handle_ball_pasted_right_paddle(right_paddle_edge_x)
+            self._handle_ball_pasted_right_paddle()
 
-        ball_at_right_paddle_edge = (ball_position_x + ball_width / 2) >= right_paddle_edge_x \
-                                    and (ball_position_x - ball_width / 2) <= right_paddle_edge_x
-        ball_within_right_paddle_y_range = ball_position_y >= right_paddle_edge_y[1] \
-                                           and ball_position_y <= right_paddle_edge_y[0]
+        ball_at_right_paddle_edge = \
+            (ball_position_x - ball_width / 2) <= right_paddle_edge_x <= (ball_position_x + ball_width / 2)
+        ball_within_right_paddle_y_range = right_paddle_edge_y[0] >= ball_position_y >= right_paddle_edge_y[1]
 
         if (ball_at_right_paddle_edge and ball_within_right_paddle_y_range):
             # print("Ball within right paddle y range:", right_paddle_edge_y)
@@ -155,7 +154,7 @@ class Game:
 
         return has_hit_top_wall or has_hit_bottom_wall
 
-    def _handle_ball_pasted_right_paddle(self, right_paddle_edge_x):
+    def _handle_ball_pasted_right_paddle(self):
         # print("Ball passed right paddle edge at x =", right_paddle_edge_x)
         self._game_on = False
         self.ball.reset_position()
@@ -173,19 +172,18 @@ class Game:
         is_past_left_paddle = (ball_position_x + ball_width) <= left_paddle_edge_x
 
         if is_past_left_paddle:
-            self._handle_ball_pasted_left_paddle(left_paddle_edge_x)
+            self._handle_ball_pasted_left_paddle()
 
-        ball_at_left_paddle_edge = (ball_position_x - ball_width / 2) <= left_paddle_edge_x \
-                                    and (ball_position_x + ball_width / 2) >= left_paddle_edge_x
-        ball_within_left_paddle_y_range = ball_position_y >= left_paddle_edge_y[1] \
-                                           and ball_position_y <= left_paddle_edge_y[0]
+        ball_at_left_paddle_edge = \
+            (ball_position_x - ball_width / 2) <= left_paddle_edge_x <= (ball_position_x + ball_width / 2)
+        ball_within_left_paddle_y_range = left_paddle_edge_y[0] >= ball_position_y >= left_paddle_edge_y[1]
 
         if (ball_at_left_paddle_edge and ball_within_left_paddle_y_range):
             # print("Ball within left paddle y range:", left_paddle_edge_y)
             # print("Ball at left paddle edge:", left_paddle_edge_x)
             self.ball.bounce_x()
 
-    def _handle_ball_pasted_left_paddle(self, left_paddle_edge_x):
+    def _handle_ball_pasted_left_paddle(self):
         # print("Ball reached left paddle edge at x =", left_paddle_edge_x)
         self._game_on = False
         self.ball.reset_position()

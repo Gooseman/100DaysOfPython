@@ -1,4 +1,4 @@
-class Quiz
+class Quiz:
     def __init__(self, questions):
         self.questions = questions
         self.question_number = -1

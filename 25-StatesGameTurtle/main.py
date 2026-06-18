@@ -26,7 +26,7 @@ def get_states_data():
     """Read the states data from the CSV file and return a StatesData object."""
     try:
         return pandas.read_csv("50_states.csv")
-    except Exception as e:
+    except FileNotFoundError as e:
         print(f"Error loading states data: {e}")
         return None
 
@@ -54,7 +54,7 @@ def display_state(state_name, states_data):
         print(f"State '{state_info}' not found in data.")
 
 
-def play_game(states_data, state_names, screen, the_turtle):
+def play_game(states_data, state_names, screen):
     score = 0
 
     while score < 50:

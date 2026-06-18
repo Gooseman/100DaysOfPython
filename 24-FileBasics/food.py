@@ -47,6 +47,8 @@ class Food:
                 print("FOOD POSITION:", food_pos)
                 return food_pos
 
+        raise RuntimeError("Failed to place food after multiple attempts. Check game dimensions and snake size.")
+
     @staticmethod
     def _coord_to_nearest_grid(coordinate, grid_size):
         return math.floor(round(coordinate / grid_size) * grid_size)

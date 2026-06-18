@@ -44,8 +44,8 @@ class Food:
             if (food_pos[0], food_pos[1]) not in snake_position:
                 print("FOOD POSITION:", food_pos)
                 return food_pos
-        
-        raise Exception("Unable to place food on the board without colliding with the snake.")
+
+        raise RuntimeError("Unable to place food on the board without colliding with the snake.")
 
     @staticmethod
     def _coord_to_nearest_grid(coordinate, grid_size):

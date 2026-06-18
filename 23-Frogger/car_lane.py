@@ -39,6 +39,6 @@ class CarLane:
             car.reset()
 
         self._cars = []
-    
+
     def cars(self):
         return self._cars

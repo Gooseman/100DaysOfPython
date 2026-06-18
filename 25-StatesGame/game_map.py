@@ -22,7 +22,7 @@ class GameMap:
             # resize canvas to image size and draw the image as background
             self.canvas.config(width=self.width, height=self.height)
             self.canvas.create_image(0, 0, image=self._bg_image, anchor="nw")
-        except Exception as e:
+        except FileNotFoundError as e:
             print(f"Error loading background image: {e}")
 
     def display_state(self, state_name, x, y):
@@ -30,7 +30,7 @@ class GameMap:
         self.canvas.create_text(
             x, y, text=state_name, font=("Arial", 10), anchor="center"
         )
-    
+
     def clear(self):
         """Clear all state names from the canvas, leaving only the background image."""
         self.canvas.delete("all")

@@ -11,7 +11,7 @@ class States:
             # print(f"Loaded state: {name} at ({x}, {y})")
             return {"name": name, "x": int(x), "y": int(y)}
 
-        with open("50_states.csv", "r") as f:
+        with open("50_states.csv", "r", encoding="utf-8") as f:
             return [parse_line(line) for line in f.readlines()[1:]]
 
     def is_state(self, name):

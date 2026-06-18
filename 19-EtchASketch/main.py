@@ -1,6 +1,6 @@
 from turtle import Turtle, Screen
-from RacingTurtle import RacingTurtle
-from TurtleRace import TurtleRace
+from racing_turtle import RacingTurtle
+from turtle_race import TurtleRace
 
 
 def etch_a_sketch(screen):

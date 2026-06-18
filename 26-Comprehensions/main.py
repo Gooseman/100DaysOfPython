@@ -1,11 +1,14 @@
+import pandas
+
 # file1 = ["3", "6", "5", "8", "33", "12", "7", "4", "72", "2", "42", "13"]
 # file2 = ["3", "6", "13", "5", "7", "89", "12", "3", "33", "34", "1", "344", "42"]
 
 
 def get_shared_numbers():
     try:
-        file1 = open("file1.txt").readlines()
-        file2 = open("file2.txt").readlines()
+        with open("file1.txt", "r", encoding="utf-8") as f1, open("file2.txt", "r", encoding="utf-8") as f2:
+            file1 = f1.readlines()
+            file2 = f2.readlines()
 
         # Use a set comprehension to find the unique numbers in file1 that are not in file2
         # shared_numbers = {int(num) for num in file1 if num in file2}
@@ -13,11 +16,6 @@ def get_shared_numbers():
     except FileNotFoundError as e:
         print(f"Error: {e}")
         shared_numbers = []
-    finally:
-        if 'file1' in locals():
-            file1.close()
-        if 'file2' in locals():
-            file2.close()
 
     print(shared_numbers)
     print(sorted(shared_numbers))
@@ -39,8 +37,6 @@ def get_fahrenheit():
 
 
 def nato():
-    import pandas
-
     nato_data = pandas.read_csv("nato_phonetic_alphabet.csv")
     dictionary = nato_dictionary(nato_data)
 

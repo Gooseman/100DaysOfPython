@@ -1,5 +1,5 @@
 import random
-from turtle import Turtle, Screen, colormode
+from turtle import Turtle, Screen
 
 import colorgram
 
@@ -96,7 +96,6 @@ def draw_dot_grid(the_turtle, num_rows, num_cols, dot_size, spacing):
 
     the_turtle.hideturtle()
     the_turtle.speed('fastest')
-    colormode(255)
     the_turtle.penup()
     the_turtle.goto(-spacing * num_cols / 2, -spacing * num_rows / 2)
 
@@ -125,6 +124,7 @@ def do_run():
     # random_walk(the_turtle, 20, 20)
     # spirograph(the_turtle, 100, 5)
     # spirograph01(the_turtle, 100, 150, 10)
+    screen.colormode(255)
     draw_dot_grid(the_turtle, 10, 10, 25, 15)
 
     the_turtle.color('')

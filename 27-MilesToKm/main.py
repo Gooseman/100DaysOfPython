@@ -14,8 +14,8 @@ def create_ui():
     miles_entry.grid(row=0, column=1, padx=10, pady=5)
     miles_entry.focus()
     tk.Button(
-        window
-        text="Convert"
+        window,
+        text="Convert",
         command=lambda: miles_to_km(miles_entry.get(), km_output)).grid(row=2, column=0, columnspan=2, pady=10)
 
     return window

@@ -28,11 +28,11 @@ class PomodoroUI:
 
         tomato = PhotoImage(file="tomato.png")
         self._time = tk.Label(
-            timer_frame
-            text="00:00"
-            font=("Courier", 24, "bold")
-            fg="white"
-            image=tomato
+            timer_frame,
+            text="00:00",
+            font=("Courier", 24, "bold"),
+            fg="white",
+            image=tomato,
             compound="center")
 
         self._time.image = tomato
@@ -79,7 +79,7 @@ class PomodoroUI:
         # self._clear_check_marks()
         pass
 
-    def _start_loop(self):
+    def start_loop(self):
         self._window.mainloop()
 
     def update_time_remaining(self, remaining_time):

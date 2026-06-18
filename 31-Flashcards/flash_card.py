@@ -57,6 +57,7 @@ class FlashCard:
         self._title_label.pack(pady=(20, 0))
         self._question_label.pack(fill=tk.BOTH, expand=True, pady=(0, 20))
 
+    # pylint: disable=too-many-arguments
     def _round_rect(self, target, x1, y1, x2, y2, r=20, **kwargs):
         target.create_arc(x1, y1, x1+2*r, y1+2*r, start=90, extent=90, style="pieslice", **kwargs)
         target.create_arc(x2-2*r, y1, x2, y1+2*r, start=0, extent=90, style="pieslice", **kwargs)
@@ -64,6 +65,7 @@ class FlashCard:
         target.create_arc(x2-2*r, y2-2*r, x2, y2, start=270, extent=90, style="pieslice", **kwargs)
         target.create_rectangle(x1+r, y1, x2-r, y2, **kwargs)
         target.create_rectangle(x1, y1+r, x2, y2-r, **kwargs)
+    # pylint: enable=too-many-arguments
 
     def _build_buttons(self):
         self._buttons_frame = tk.Frame(self._main_window, bg=self._main_window["bg"])

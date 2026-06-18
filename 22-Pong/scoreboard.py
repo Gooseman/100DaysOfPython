@@ -1,6 +1,6 @@
 from turtle import Turtle
 
-from constants import court_distance_from_edge, game_height
+from constants import COURT_DISTANCE_FROM_EDGE, GAME_HEIGHT
 
 
 class Scoreboard:
@@ -19,7 +19,7 @@ class Scoreboard:
         score_display.hideturtle()
         score_display.pensize(5)
         score_display.penup()
-        score_display.goto(0, game_height / 2 - court_distance_from_edge)
+        score_display.goto(0, GAME_HEIGHT / 2 - COURT_DISTANCE_FROM_EDGE)
         return score_display
 
     def update_scoreboard(self):

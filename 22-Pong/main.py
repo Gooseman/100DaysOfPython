@@ -17,7 +17,8 @@ def start_game():
     screen = prepare_screen()
 
     # The game is started by hitting the space bar.
-    Game(screen)
+    # For some reason, pylint on github thinks the Game constructor expects arguments.
+    Game(screen) # pylint: disable=no-value-for-parameter
     screen.exitonclick()
 
 if __name__ == "__main__":

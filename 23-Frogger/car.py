@@ -1,6 +1,8 @@
 from random import choice
 from turtle import Turtle
 
+# For some reason, pylint on github is unable to find these values in the constants module.
+# pylint: disable=no-name-in-module
 from constants import BASE_SQUARE_SIZE, CAR_COLOURS, CAR_LENGTH_FACTORS
 
 class Car(Turtle):

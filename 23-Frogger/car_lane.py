@@ -1,6 +1,9 @@
 from random import choice
 
 from car import Car
+
+# For some reason, pylint on github is unable to find CAR_SPEEDS in the constants module.
+# pylint: disable=no-name-in-module
 from constants import BASE_SQUARE_SIZE, CAR_SPEEDS, GAME_HEIGHT, GAME_WIDTH
 
 class CarLane:

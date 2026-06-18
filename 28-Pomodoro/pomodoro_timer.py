@@ -1,6 +1,8 @@
 import threading
 import time
 
+# For some reason, pylint on github can't find these imports, even though they work fine locally.
+# pylint: disable=no-name-in-module
 from constants import WORK_MIN, SHORT_BREAK_MIN, LONG_BREAK_MIN
 from states import IDLE_STATE, WORK_STATE, SHORT_BREAK_STATE, LONG_BREAK_STATE
 

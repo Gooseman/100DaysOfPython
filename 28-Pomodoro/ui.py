@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import PhotoImage
 
+# For some reason, pylint thinks these aren't in the modules.
+# pylint: disable=no-name-in-module
 from constants import GREEN
 from states import LONG_BREAK_STATE
 

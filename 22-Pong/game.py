@@ -21,7 +21,8 @@ class Game:
     def __init__(self, screen):
         self.screen = screen
         self.court = Game._create_court()
-        self.scoreboard = Scoreboard()
+        # Scoreboard constructor takes no args.  For some reason, pylint on github thinks it does.
+        self.scoreboard = Scoreboard()  # pylint: disable=no-value-for-parameter
         self.left_paddle, self.right_paddle = self._create_paddles()
         print(self.left_paddle, self.right_paddle)
         self.ball = Game._create_ball()

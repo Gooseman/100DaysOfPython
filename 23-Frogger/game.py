@@ -9,7 +9,7 @@ from scoreboard import Scoreboard
 class Game:
     def __init__(self, screen):
         self._game_running = False
-        self._screen = screen#
+        self._screen = screen
 
         lane_width = 2 * BASE_SQUARE_SIZE
         # Each lane is lane_width wide.  There are therefore game_height // lane_width lanes - 2. The first lane start
@@ -18,7 +18,8 @@ class Game:
         self._lanes = [CarLane(i) for i in range(0, number_of_lanes)]
 
         self._frog = Frog()
-        self._scoreboard = Scoreboard()
+        # For some reason, pylint on github thinks Scoreboard takes arguments, even though it doesn't.
+        self._scoreboard = Scoreboard() # pylint: disable=no-value-for-parameter
         self._prepare_key_bindings()
         self._screen.update()
         self._game_running = False
@@ -38,6 +39,7 @@ class Game:
         self._reached_goal = False
         self._screen.update()
 
+    # pylint: disable=no-member
     def _next_level(self):
         self._scoreboard.increase_level()
         self._frog.reset()
@@ -48,6 +50,7 @@ class Game:
 
         self._reached_goal = False
         self._screen.update()
+    # pylint: enable=no-member
 
     def _prepare_key_bindings(self):
         self._screen.listen()

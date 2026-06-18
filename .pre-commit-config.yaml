@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: custom-pylint
+        name: Custom Pylint
+        entry: pylint --rcfile=.pylintrc --fail-under=9.5
+        language: system
+        types: [python]

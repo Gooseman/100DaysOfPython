@@ -1,2 +1,6 @@
+# Day 18
 colorgram.py
+# Days 25 to 32
 pandas
+# Days 33 to 40
+requests

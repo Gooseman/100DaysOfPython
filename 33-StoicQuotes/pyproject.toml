@@ -8,4 +8,8 @@ version = "0.0.0"
 
 [tool.setuptools.packages.find]
 # use where = ["src"] if your package is in a src/ directory
-where = ["."]
+where = ["src"]
+
+[tool.setuptools]
+# tell setuptools that the project package root lives in `src/`
+package-dir = { "" = "src" }

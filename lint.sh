@@ -106,7 +106,7 @@ i=0
 exit_code=0
 while [ $i -lt "${#files[@]}" ]; do
   batch=( "${files[@]:$i:$BATCH_SIZE}" )
-  if ! pylint "${batch[@]}"; then
+  if ! pylint --rcfile=.pylintrc "${batch[@]}"; then
     exit_code=1
   fi
   i=$((i + BATCH_SIZE))

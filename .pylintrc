@@ -1,11 +1,12 @@
 [MASTER]
 disable=similarities
+init-hook='import sys; sys.path.insert(0, "src")'
+extension-pkg-whitelist=colorgram
 
 [MESSAGES CONTROL]
 disable=missing-module-docstring,
     missing-function-docstring,
     missing-class-docstring,
-    missing-final-newline,
     too-few-public-methods,
     too-many-instance-attributes,
     attribute-defined-outside-init,

@@ -1,7 +1,7 @@
 [MASTER]
 disable=similarities
-init-hook='import sys; sys.path.insert(0, "src")'
-extension-pkg-whitelist=colorgram
+; init-hook='import sys; sys.path.insert(0, "src")'
+; extension-pkg-whitelist=colorgram
 
 [MESSAGES CONTROL]
 disable=missing-module-docstring,

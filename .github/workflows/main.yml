@@ -23,7 +23,7 @@ jobs:
           pip install -r requirements.txt
           
       - name: Run the birthday wisher script
-        run: python ./33-StoicQuotes/src/main.py
+        run: python ./33-StoicQuotes/src/stoic_quotes/main.py
         env:
           BIRTHDAY_SENDER_ACC_ADDRESS: ${{ secrets.BIRTHDAY_SENDER_ACC_ADDRESS }}
           BIRTHDAY_SENDER_PASSWORD: ${{ secrets.BIRTHDAY_SENDER_PASSWORD }}

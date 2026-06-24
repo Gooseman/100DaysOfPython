@@ -4,8 +4,8 @@ LOCATION_URL = "http://api.open-notify.org/iss-now.json"
 
 def parse_iss_location(data):
     try:
-        latitude = data["iss_position"]["latitude"]
-        longitude = data["iss_position"]["longitude"]
+        latitude = float(data["iss_position"]["latitude"])
+        longitude = float(data["iss_position"]["longitude"])
         return latitude, longitude
     except KeyError as e:
         print(f"Key error while parsing ISS location: {e}")

@@ -12,7 +12,7 @@ def _parse_sunrise_sunset(data):
     except KeyError as e:
         print(f"Key error while parsing sunrise/sunset data: {e}")
         return None
-    
+
 def get_sunrise_sunset(latitude, longitude):
     """
     Get the sunrise and sunset times for a given latitude and longitude.
@@ -29,7 +29,7 @@ def get_sunrise_sunset(latitude, longitude):
         "formatted": 0
     }
     # url = SUNRISE_URL.format(latitude=latitude, longitude=longitude)
-    
+
     try:
     # response = requests.get(url, timeout=30)
         response = requests.get(SUNRISE_URL, params=parameters, timeout=30)

@@ -11,5 +11,3 @@ source venv/Scripts/activate
 
 echo Checking current virtual environment
 echo $VIRTUAL_ENV
-
-

@@ -13,7 +13,7 @@ class QuestionSource:
         self._question_data = []
         self._token = ""
 
-    def get_questions(self, number_of_questions):
+    def get_questions(self, number_of_questions) -> list[TriviaQuestionModel]:
         """
         Fetches a specified number of trivia questions from the Open Trivia Database API.
         """
@@ -23,7 +23,7 @@ class QuestionSource:
 
         if not self._token:
             print("Unable to fetch questions without a valid session token.")
-            return
+            return []
 
         code, questions = self._request_questions(number_of_questions)
 
@@ -54,7 +54,7 @@ class QuestionSource:
 
         self._token = self._parse_token_response(token_response)
 
-    def _parse_token_response(self, response):
+    def _parse_token_response(self, response) -> str:
         """
             Parses the response from the Open Trivia Database API for a session token.  The response is expected to be a
             JSON object with a "response_code" and a "token" field. If the "response_code" is 0, the method returns the 
@@ -71,7 +71,7 @@ class QuestionSource:
 
         return ""
 
-    def _request_questions(self, number_of_questions):
+    def _request_questions(self, number_of_questions) -> tuple[int, list[dict]]:
         """
             Requests a specified number of trivia questions from the Open Trivia Database API using the session token.
 
@@ -87,14 +87,14 @@ class QuestionSource:
 
         if questions_response is None:
             print("Failed to retrieve questions.")
-            return []
+            return -1, []
 
         if questions_response.get("response_code") == 0:
             return 0, questions_response.get("results", [])
 
         return questions_response.get("response_code"), []
 
-    def _build_question_url(self, number_of_questions):
+    def _build_question_url(self, number_of_questions) -> str:
         """
             Constructs the URL for requesting trivia questions from the Open Trivia Database API.
 
@@ -108,7 +108,7 @@ class QuestionSource:
 
         return f"{self.BASE_QUESTION_URL}&{num_questions_param}&{token_param}"
 
-    def _parse_questions(self, questions_data):
+    def _parse_questions(self, questions_data) -> list[TriviaQuestionModel]:
         """
             Parses the list of trivia questions received from the Open Trivia Database API and converts them into a list
             of `TriviaQuestionModel` instances.

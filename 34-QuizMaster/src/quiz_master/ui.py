@@ -1,6 +1,8 @@
 from tkinter import PhotoImage, Tk, Label, Canvas, Button
 from pathlib import Path
 
+from quiz_master.quiz_brain import QuizBrain
+
 THEME_COLOR = "#375362"
 
 class QuizInterface:
@@ -11,7 +13,7 @@ class QuizInterface:
     STARTER_TEXT = "Start Quiz"
     QUESTION_BG_COLOUR = "white"
 
-    def __init__(self, quiz_brain):
+    def __init__(self, quiz_brain: QuizBrain):
         self._quiz = quiz_brain
         self._window = self._create_window()
 
@@ -25,14 +27,14 @@ class QuizInterface:
 
         self._window.mainloop()
 
-    def _create_window(self):
+    def _create_window(self) -> Tk:
         window = Tk()
 
         window.title("Quizzler")
         window.config(padx=20, pady=20, bg=THEME_COLOR)
         return window
 
-    def _create_score_display(self):
+    def _create_score_display(self) -> Label:
         score_display = Label(
             master=self._window,
             text="",
@@ -44,10 +46,10 @@ class QuizInterface:
         score_display.grid(row=self.SCORE_ROW, column=0, columnspan=2, pady=20)
         return score_display
 
-    def _set_score(self, score, num_questions):
+    def _set_score(self, score, num_questions: int):
         self._score_label.config(text=f"Score: {score}/{num_questions}")
 
-    def _create_quiz_starter(self):
+    def _create_quiz_starter(self) -> Button:
         starter = Button(
             master=self._window,
             text=self.STARTER_TEXT,
@@ -58,7 +60,7 @@ class QuizInterface:
         starter.grid(row=self.STARTER_ROW, column=0, columnspan=2, pady=10)
         return starter
 
-    def _create_question(self):
+    def _create_question(self) -> tuple[Canvas, str]:
         canvas = Canvas(master=self._window, width=300, height=250, bg=self.QUESTION_BG_COLOUR)
         question_text = canvas.create_text(
             150,
@@ -72,7 +74,7 @@ class QuizInterface:
 
         return canvas, question_text
 
-    def _set_question_text(self, question_text):
+    def _set_question_text(self, question_text: str):
         self._canvas.itemconfig(self._question_text, text=question_text)
 
     def _set_to_start_state(self):
@@ -83,7 +85,7 @@ class QuizInterface:
         self._true_button.configure(state="disabled")
         self._false_button.configure(state="disabled")
 
-    def _add_answer_buttons(self):
+    def _add_answer_buttons(self) -> tuple[PhotoImage, Button, PhotoImage, Button]:
         images_dir = Path(__file__).parent / "images"
 
         true_image = PhotoImage(file=str(images_dir / "true.png"))
@@ -108,7 +110,7 @@ class QuizInterface:
         is_correct = self._quiz.check_answer("False")
         self._give_feedback(is_correct)
 
-    def _give_feedback(self, is_correct):
+    def _give_feedback(self, is_correct: bool):
         self._set_score(*self._quiz.get_score())
 
         if is_correct:

@@ -1,13 +1,15 @@
-
+from quiz_master.question_source import QuestionSource
+from quiz_master.trivia_question_model import TriviaQuestionModel
 class QuizBrain:
-    NUM_QUESTIONS_PER_ROUND = 5
+    _DEFAULT_NUM_QUESTIONS_PER_ROUND = 5
 
-    def __init__(self, question_source):
+    def __init__(self, question_source: QuestionSource, questions_per_round: int = _DEFAULT_NUM_QUESTIONS_PER_ROUND):
         self._question_source = question_source
         self._questions = []
         self._question_number = 0
         self._score = 0
         self._current_question = 0
+        self._num_questions_per_round = questions_per_round
 
     def start_quiz_round(self):
         """
@@ -22,12 +24,12 @@ class QuizBrain:
         self._question_number = 0
         self._score = 0
         self._current_question = None
-        self._questions = self._question_source.get_questions(self.NUM_QUESTIONS_PER_ROUND)
+        self._questions = self._question_source.get_questions(self._num_questions_per_round)
 
-    def has_more_questions(self):
+    def has_more_questions(self) -> bool:
         return self._question_number < len(self._questions)
 
-    def next_question(self):
+    def next_question(self) -> TriviaQuestionModel | None:
         if self.has_more_questions():
             self._current_question = self._questions[self._question_number]
             self._question_number += 1
@@ -35,12 +37,12 @@ class QuizBrain:
         else:
             return None
 
-    def check_answer(self, user_answer):
+    def check_answer(self, user_answer: str) -> bool:
         if user_answer.lower() == self._current_question.correct_answer.lower():
             self._score += 1
             return True
         else:
             return False
 
-    def get_score(self):
-        return self._score, self.NUM_QUESTIONS_PER_ROUND
+    def get_score(self) -> tuple[int, int]:
+        return self._score, self._num_questions_per_round

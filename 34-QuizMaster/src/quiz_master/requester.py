@@ -1,6 +1,6 @@
 import requests
 
-def get_request(url):
+def get_request(url) -> dict:
     """
     Makes a GET request to the specified URL and returns the response.
 
@@ -8,7 +8,7 @@ def get_request(url):
         url (str): The URL to send the GET request to.
 
     Returns:
-        Response: The response object resulting from the GET request.
+        dict: The JSON response as a dictionary if the request is successful, otherwise an empty dictionary.
     """
     try:
         print(f"Making GET request to URL: {url}")
@@ -19,16 +19,16 @@ def get_request(url):
         return response.json()
     except requests.ConnectTimeout as timeout_err:
         print(f"The request timed out: {timeout_err}")
-        return None
+        return {}
     except requests.ConnectionError as conn_err:
         print(f"Failed to connect to the server: {conn_err}")
-        return None
+        return {}
     except requests.Timeout as timeout_err:
         print(f"The request timed out: {timeout_err}")
-        return None
+        return {}
     except requests.HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
-        return None
+        return {}
     except requests.RequestException as req_err:
         print(f"An error occurred: {req_err}")
-        return None
+        return {}

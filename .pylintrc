@@ -1,6 +1,7 @@
 [MASTER]
 disable=similarities
 ; init-hook='import sys; sys.path.insert(0, "src")'
+init-hook='import sys,glob,os; [sys.path.insert(0,p) for p in glob.glob(os.path.join(os.getcwd(),"*","src")) if os.path.isdir(p)]'
 ; extension-pkg-whitelist=colorgram
 
 [MESSAGES CONTROL]

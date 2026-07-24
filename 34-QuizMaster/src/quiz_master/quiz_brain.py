@@ -34,15 +34,15 @@ class QuizBrain:
             self._current_question = self._questions[self._question_number]
             self._question_number += 1
             return self._current_question
-        else:
-            return None
+
+        return None
 
     def check_answer(self, user_answer: str) -> bool:
         if user_answer.lower() == self._current_question.correct_answer.lower():
             self._score += 1
             return True
-        else:
-            return False
+
+        return False
 
     def get_score(self) -> tuple[int, int]:
         return self._score, self._num_questions_per_round

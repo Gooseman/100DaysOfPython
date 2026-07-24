@@ -17,10 +17,10 @@ def iss_location():
 
     print(f"Current ISS Location: Latitude: {latitude}, Longitude: {longitude}")
 
-def get_sunrise_sunset_time(latitude, longitude):
+def get_sunrise_sunset_time(latitude, longitude) -> tuple[str, str]:
     if float("nan") in (latitude, longitude):
         print("Failed to retrieve ISS location for sunrise calculation.")
-        return
+        return "0", "0"
 
     sunrise_at, sunset_at = get_sunrise_sunset(latitude, longitude)
 
@@ -29,8 +29,8 @@ def get_sunrise_sunset_time(latitude, longitude):
     return sunrise_at, sunset_at
 
 def is_sun_down(sunrise_time, sunset_time, current_time):
-    if sunrise_time is None or sunset_time is None:
-        print("Sunrise or sunset time is None, cannot determine if the sun is down.")
+    if sunrise_time in ("0", "0") or sunset_time in ("0", "0"):
+        print("Sunrise or sunset time is invalid, cannot determine if the sun is down.")
         return False
 
     try:

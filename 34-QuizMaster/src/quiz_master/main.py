@@ -1,5 +1,3 @@
-from quiz_master.data import question_data
-from quiz_master.trivia_question_model import TriviaQuestionModel
 from quiz_master.question_source import QuestionSource
 from quiz_master.quiz_brain import QuizBrain
 from quiz_master.ui import QuizInterface
@@ -11,7 +9,7 @@ from quiz_master.ui import QuizInterface
 
 #     Args:
 #         number_of_questions (int): The number of trivia questions to fetch.
-    
+
 #     Returns:
 #         list: A list of TriviaQuestionModel instances representing the fetched trivia questions.
 #     """

@@ -1,4 +1,3 @@
-import pytest
 
 from quiz_master.quiz_brain import QuizBrain
 from quiz_master.trivia_question_model import TriviaQuestionModel
@@ -12,7 +11,7 @@ class FakeQuestionSource:
     def get_questions(self, num_questions: int) -> list[TriviaQuestionModel]:
         if self._questions_returned >= len(self._questions):
             return []
-        
+
         self._questions_returned += num_questions
         return self._questions[self._questions_returned - num_questions: self._questions_returned]
 

@@ -1,3 +1,4 @@
+# pylint: disable=line-too-long
 question_data = [
     {
         "category": "Science: Computers",

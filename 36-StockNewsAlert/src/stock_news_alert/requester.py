@@ -15,8 +15,6 @@ def get_request(url, params: dict = None) -> dict:
 
         response = requests.get(url, params=params, timeout=15)
 
-        print(response.url)
-
         print(f"Response status code: {response.status_code}")
         # Raise an exception for HTTP errors
         response.raise_for_status()

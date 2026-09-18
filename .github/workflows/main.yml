@@ -1,4 +1,4 @@
-name: Wish Them Happy Birthday
+name: 100 Days of Python scripts
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
     - cron: '0 9 * * *'
   
 jobs:
-  run-python:
+  stoic-quotes:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -22,11 +22,35 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           
-      - name: Run the birthday wisher script
+      - name: Run the stoic quotes script
         run: python -m stoic_quotes.main
-        working-directory: 33_StoicQuotes/src
+        working-directory: 33-StoicQuotes/src
         env:
-          BIRTHDAY_SENDER_ACC_ADDRESS: ${{ secrets.BIRTHDAY_SENDER_ACC_ADDRESS }}
-          BIRTHDAY_SENDER_PASSWORD: ${{ secrets.BIRTHDAY_SENDER_PASSWORD }}
-          BIRTHDAY_SENDER_EMAIL: ${{ secrets.BIRTHDAY_SENDER_EMAIL }}
-          BIRTHDAY_SENDER_SMTP_SERVER: ${{ secrets.BIRTHDAY_SENDER_SMTP_SERVER }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  stock-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '>=3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run the stock checker script
+        run: python -m stock_checker.main
+        working-directory: 36-StockNewsAlerts/src
+        env:
+          PIXELA_TOKEN: ${{ secrets.PIXELA_TOKEN }}
+          ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          NEWSORG_API_KEY: ${{ secrets.NEWSORG_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

@@ -3,6 +3,8 @@ pre-commit
 pylint
 pytest
 
+100-days-common
+
 # Day 18
 colorgram.py
 # Days 25 to 32

@@ -1,6 +1,7 @@
 from stoic_quotes.quote_retriever import QuoteRetriever
 from stoic_quotes.quote_ui import QuoteUi
-from stoic_quotes.telegram import send_telegram_message
+
+from all_common.telegram import send_telegram_message
 
 def send_quote():
     quote, author = QuoteRetriever().get_quote()

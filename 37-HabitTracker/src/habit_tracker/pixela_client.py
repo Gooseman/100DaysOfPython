@@ -1,6 +1,6 @@
 import os
 
-from habit_tracker.requester import get_request, post_request
+from all_common.requester import get_request, post_request
 
 PIXELA_BASE_URL = "https://pixe.la"
 PIXELA_USERS_URL = f"{PIXELA_BASE_URL}/v1/users"

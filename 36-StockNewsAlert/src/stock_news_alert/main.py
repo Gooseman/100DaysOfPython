@@ -1,9 +1,9 @@
 from functools import reduce
-import sys
 
 from stock_news_alert.news_reader import read_news
 from stock_news_alert.price_reader import read_daily_prices, read_recent_price
-from stock_news_alert.telegram import send_telegram_message
+
+from all_common.telegram import send_telegram_message
 
 STOCK = "AXON"
 COMPANY_NAME = "Axon Enterprise Inc"
@@ -87,8 +87,8 @@ def get_price_data(ticker_name: str):
             or yesterdays_close == 0 \
             or day_before_yesterdays_open == 0 \
             or day_before_yesterdays_close == 0:
-        return
-    
+        return 0
+
     current_price_change = current_price - today_open
     current_percentage_change = calc_percentage(today_open, current_price)
     closing_percentage_change = (

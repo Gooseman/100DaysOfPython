@@ -1,0 +1,36 @@
+name: Stock Alert (100 Days of Python)
+
+on:
+  push:
+    branches:
+      - actions
+  schedule:
+    # Every day at 9am, Tuesday to Saturday
+    - cron: '0 9 * * 2-6'
+  
+jobs:
+  stock-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '>=3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Run the stock checker script
+        run: python -m stock_news_alert.main
+        working-directory: 36-StockNewsAlert/src
+        env:
+          ALPHAVANTAGE_API_KEY: ${{ secrets.ALPHAVANTAGE_API_KEY }}
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          NEWSORG_API_KEY: ${{ secrets.NEWSORG_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}

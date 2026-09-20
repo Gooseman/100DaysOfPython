@@ -3,7 +3,7 @@ pre-commit
 pylint
 pytest
 
-100-days-common
+-e ./all_common
 
 # Day 18
 colorgram.py

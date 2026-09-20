@@ -2,7 +2,7 @@
 import os
 
 import stock_news_alert.date_time as offset_by_days
-from stock_news_alert import requester
+from all_common import requester
 
 NEWSORG_API_KEY = os.getenv("NEWSORG_API_KEY")
 

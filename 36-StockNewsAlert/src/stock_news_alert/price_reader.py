@@ -1,6 +1,6 @@
 import os
 
-from stock_news_alert import requester
+from all_common import requester
 
 ALPHAVANTAGE_API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
 FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY")

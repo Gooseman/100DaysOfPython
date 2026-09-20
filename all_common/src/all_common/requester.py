@@ -1,10 +1,18 @@
 import requests
 
+def default_handle_response(response):
+    # What if the response is not JSON? This will raise an exception.
+    return response.json()
+
+def default_on_error(status, message):
+    print(f"Error occurred with status {status}: {message}")
+    return {}
+
 def get_request(
         url,
         params: dict = None,
-        handle_response = None,
-        on_error = None) -> dict:
+        handle_response = default_handle_response,
+        on_error = default_on_error) -> dict:
     """
     Makes a GET request to the specified URL and returns the response.
 
@@ -22,8 +30,8 @@ def get_request(
 
 def try_send_request(
         request_func,
-        handle_response = lambda response: response.json(),
-        on_error = lambda status, message: {}) -> dict:
+        handle_response = default_handle_response,
+        on_error = default_on_error) -> dict:
     """
     Tries to send a request using the specified request function and returns the response.
 
@@ -55,7 +63,7 @@ def try_send_request(
         print(f"An error occurred: {req_err}")
         return on_error(-1, f"An error occurred: {req_err}")
 
-def post_request(url, data: dict, handle_response = None, on_error = None) -> dict:
+def post_request(url, data: dict, handle_response = default_handle_response, on_error = default_on_error) -> dict:
     """
     Makes a POST request to the specified URL and returns the response.
 
